@@ -444,13 +444,6 @@ export default function BlogPost() {
       </a>
 
       <div className="container mx-auto px-4 py-8 max-w-6xl">
-        {/* Breadcrumb - Hide full title on mobile */}
-        <nav className="flex items-center space-x-2 text-sm text-muted-foreground mb-6" aria-label="Breadcrumb">
-          <Link to="/" className="hover:text-foreground transition-colors">{t('breadcrumb_home')}</Link>
-          <span>/</span>
-          <Link to="/blog" className="hover:text-foreground transition-colors">{t('breadcrumb_blog')}</Link>
-        </nav>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Main Content */}
           <main 
@@ -563,9 +556,14 @@ export default function BlogPost() {
 
               {/* Post Content */}
               <div className="prose dark:prose-invert max-w-none prose-lg">
-                <ReactMarkdown 
+                <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
+                    h1: ({ children, ...props }) => {
+                      const text = children?.toString() || '';
+                      const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                      return <h2 id={id} {...props}>{children}</h2>;
+                    },
                     h2: ({ children, ...props }) => {
                       const text = children?.toString() || '';
                       const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
