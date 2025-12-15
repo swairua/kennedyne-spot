@@ -72,6 +72,13 @@ export function Services() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Services | Professional Trading Education & Mentorship | KenneDyne spot"
+        description="Discover our comprehensive trading education services including mentorship programs, educational signals, and the DRIVE Framework for institutional trading."
+        keywords="trading education services, forex mentorship, trading signals, DRIVE framework, professional education, trading course"
+        canonical={canonical}
+        schema={breadcrumbSchema}
+      />
       <Navigation />
       
       {/* Hero Section */}
