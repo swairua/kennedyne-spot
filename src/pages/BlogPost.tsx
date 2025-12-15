@@ -444,6 +444,15 @@ export default function BlogPost() {
       </a>
 
       <div className="container mx-auto px-4 py-8 max-w-6xl">
+        {/* Breadcrumb Navigation */}
+        <nav className="flex items-center space-x-2 text-sm text-muted-foreground mb-6" aria-label="Breadcrumb">
+          <Link to="/" className="hover:text-foreground transition-colors">{t('breadcrumb_home')}</Link>
+          <span className="text-muted-foreground/60">/</span>
+          <Link to="/blog" className="hover:text-foreground transition-colors">{t('breadcrumb_blog')}</Link>
+          <span className="text-muted-foreground/60">/</span>
+          <span className="text-foreground font-medium line-clamp-1">{translated?.title ?? post.title}</span>
+        </nav>
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Main Content */}
           <main 
