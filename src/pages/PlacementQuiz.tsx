@@ -133,6 +133,13 @@ export default function PlacementQuiz() {
   if (showResults) {
     return (
       <div className="min-h-screen bg-background">
+        <SEOHead
+          title="Trading Knowledge Assessment | KenneDyne spot Placement Quiz"
+          description="Test your trading knowledge and assess your readiness for our mentorship program. This placement quiz evaluates your understanding of forex trading fundamentals."
+          keywords="trading quiz, placement test, forex knowledge, trading fundamentals, mentorship eligibility"
+          canonical={canonical}
+          schema={breadcrumbSchema}
+        />
         <Navigation />
         <main className="pt-20">
           <section className="py-20">
@@ -236,6 +243,13 @@ export default function PlacementQuiz() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Trading Knowledge Assessment | KenneDyne spot Placement Quiz"
+        description="Test your trading knowledge and assess your readiness for our mentorship program. This placement quiz evaluates your understanding of forex trading fundamentals."
+        keywords="trading quiz, placement test, forex knowledge, trading fundamentals, mentorship eligibility"
+        canonical={canonical}
+        schema={breadcrumbSchema}
+      />
       <Navigation />
       <main className="pt-20">
         <section className="py-20">
