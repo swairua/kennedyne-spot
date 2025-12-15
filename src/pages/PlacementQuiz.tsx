@@ -5,9 +5,11 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { SEOHead } from "@/components/SEOHead";
 import { useToast } from "@/hooks/use-toast";
 import { CheckCircle, XCircle, Brain, Trophy } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { createCanonicalUrl, createBreadcrumbSchema } from "@/utils/seoHelpers";
 
 const quizQuestions = [
   {
@@ -69,6 +71,14 @@ const quizQuestions = [
 
 export default function PlacementQuiz() {
   console.log('PlacementQuiz component is rendering');
+  const location = useLocation();
+  const canonical = createCanonicalUrl(location.pathname);
+
+  const breadcrumbSchema = createBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Placement Quiz", url: canonical }
+  ]);
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [showResults, setShowResults] = useState(false);
