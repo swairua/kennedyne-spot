@@ -4,16 +4,18 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  TrendingUp, 
-  AlertTriangle, 
-  CheckCircle, 
+import { SEOHead } from "@/components/SEOHead";
+import {
+  TrendingUp,
+  AlertTriangle,
+  CheckCircle,
   XCircle,
   Clock,
   Target,
   Shield
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { createCanonicalUrl, createBreadcrumbSchema } from "@/utils/seoHelpers";
 
 const howToUseSteps = [
   {
@@ -64,8 +66,23 @@ const whatNotIncluded = [
 ];
 
 const SignalsTools = () => {
+  const location = useLocation();
+  const canonical = createCanonicalUrl(location.pathname);
+
+  const breadcrumbSchema = createBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Signals & Tools", url: canonical }
+  ]);
+
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Trading Signals & Tools | Educational Analysis by KenneDyne spot"
+        description="Access educational trading signals and tools designed to help you understand market analysis. Learn from detailed analysis of DRIVE methodology applied to forex markets."
+        keywords="trading signals, forex analysis, educational signals, trading tools, DRIVE methodology, market analysis, trading education"
+        canonical={canonical}
+        schema={breadcrumbSchema}
+      />
       <Navigation />
       <main className="pt-20">
         {/* Hero Section */}
