@@ -36,29 +36,6 @@ export function StructuredData() {
     "teaches": ["Forex Trading", "DRIVE Strategy", "Risk Management", "Trading Psychology", "Market Analysis"]
   };
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "What is the D.R.I.V.E Framework?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": `D.R.I.V.E is our systematic trading framework: ${driveFullName}. It teaches traders to analyze market direction through multiple timeframes, define trading ranges, identify high-probability interest points, apply proper risk management, and execute trades with institutional precision.`
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Is trading education suitable for beginners?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Our structured education program accommodates various skill levels, with mentorship support for personalized learning."
-        }
-      }
-    ]
-  };
-
   const webSiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -73,7 +50,7 @@ export function StructuredData() {
 
   const combinedSchema = {
     "@context": "https://schema.org",
-    "@graph": [organizationSchema, courseSchema, faqSchema, webSiteSchema]
+    "@graph": [organizationSchema, courseSchema, webSiteSchema]
   };
 
   return (

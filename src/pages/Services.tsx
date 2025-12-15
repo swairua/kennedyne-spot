@@ -5,9 +5,11 @@ import { SectionDivider } from "@/components/SectionDivider";
 import { DriveStrategySection } from "@/components/DriveStrategySection";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SEOHead } from "@/components/SEOHead";
 import { LineChart, BookOpen, Users, CheckCircle, MessageCircle, Target, Shield, Brain, TrendingUp, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { createCanonicalUrl, createBreadcrumbSchema } from "@/utils/seoHelpers";
 import educationHero from "@/assets/education-hero.jpg";
 import signalsService from "@/assets/signals-service.jpg";
 import forexMentorshipService from "@/assets/forex-mentorship-service.jpg";
@@ -16,6 +18,13 @@ import { useI18n } from '@/i18n';
 
 export function Services() {
   const { t } = useI18n();
+  const location = useLocation();
+  const canonical = createCanonicalUrl(location.pathname);
+
+  const breadcrumbSchema = createBreadcrumbSchema([
+    { name: "Home", url: "/" },
+    { name: "Services", url: canonical }
+  ]);
   const services = [
     {
       title: t('services_card1_title'),
@@ -63,6 +72,13 @@ export function Services() {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEOHead
+        title="Services | Professional Trading Education & Mentorship | KenneDyne spot"
+        description="Discover our comprehensive trading education services including mentorship programs, educational signals, and the DRIVE Framework for institutional trading."
+        keywords="trading education services, forex mentorship, trading signals, DRIVE framework, professional education, trading course"
+        canonical={canonical}
+        schema={breadcrumbSchema}
+      />
       <Navigation />
       
       {/* Hero Section */}

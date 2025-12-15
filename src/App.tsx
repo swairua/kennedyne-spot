@@ -75,12 +75,9 @@ const queryClient = new QueryClient({
 // Debug logging to see if App is rendering
 console.log('App.tsx is loading and rendering');
 
-// Health check component
+// Health check component - simple endpoint, no SEO needed (blocked by robots.txt)
 const HealthCheck = () => (
   <div>
-    <Helmet>
-      <meta name="robots" content="noindex, nofollow" />
-    </Helmet>
     OK
   </div>
 );
