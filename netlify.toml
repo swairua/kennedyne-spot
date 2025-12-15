@@ -54,13 +54,6 @@
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
 
-# Redirect trailing slashes
-[[redirects]]
-  from = "/:path/*"
-  to = "/:path"
-  status = 301
-  force = false
-
 # Blog posts - serve static files with OG tags
 [[redirects]]
   from = "/blog/:slug/index.html"
