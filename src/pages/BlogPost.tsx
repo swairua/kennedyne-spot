@@ -449,8 +449,6 @@ export default function BlogPost() {
           <Link to="/" className="hover:text-foreground transition-colors">{t('breadcrumb_home')}</Link>
           <span className="text-muted-foreground/60">/</span>
           <Link to="/blog" className="hover:text-foreground transition-colors">{t('breadcrumb_blog')}</Link>
-          <span className="text-muted-foreground/60">/</span>
-          <span className="text-foreground font-medium line-clamp-1">{translated?.title ?? post.title}</span>
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
