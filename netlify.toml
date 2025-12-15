@@ -54,18 +54,18 @@
     X-Content-Type-Options = "nosniff"
     X-Frame-Options = "SAMEORIGIN"
 
-# Redirect trailing slashes
-[[redirects]]
-  from = "/:path/*"
-  to = "/:path"
-  status = 301
-  force = false
-
 # Blog posts - serve static files with OG tags
 [[redirects]]
   from = "/blog/:slug/index.html"
   to = "/blog/:slug/index.html"
   status = 200
+  force = false
+
+# Redirect trailing slashes for non-asset paths
+[[redirects]]
+  from = "/!(assets)/*/:path/*"
+  to = "/:path"
+  status = 301
   force = false
 
 # SPA routing - redirect 404s to index.html (must be last)
