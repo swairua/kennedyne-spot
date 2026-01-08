@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- This sitemap is dynamically generated from blog posts in the database -->
-  <!-- Blog posts should be added here with their publication dates -->
-  <!-- Example format: -->
-  <!--
   <url>
-    <loc>https://kennedynespot.com/#/blog/post-title-slug</loc>
-    <lastmod>2025-01-15</lastmod>
+    <loc>https://kennedynespot.com/blog/understanding-market-structure-a-beginner-friendly-guide-using-the-drive-strategy</loc>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>never</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
-  -->
-  
-  <!-- Currently serving as a placeholder - integrate with your CMS/database to auto-generate -->
-  <!-- To implement dynamic blog sitemap:
-       1. Create an API endpoint that queries published blog posts
-       2. Format them as XML sitemap entries
-       3. Update sitemap index to include this file
-  -->
+  <url>
+    <loc>https://kennedynespot.com/blog/risk-management-a-step-by-step-guide-to-trading-safely-and-successfully</loc>
+    <lastmod>2025-12-15</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kennedynespot.com/blog/the-psychology-of-trading-how-to-overcome-the-mental-traps-holding-you-back</loc>
+    <lastmod>2025-12-04</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kennedynespot.com/blog/smart-money-concepts-following-institutional-flow</loc>
+    <lastmod>2025-12-04</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://kennedynespot.com/blog/building-your-trading-journal-track-progress-not-just-profits</loc>
+    <lastmod>2025-12-03</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
