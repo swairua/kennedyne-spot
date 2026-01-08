@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 const SUPABASE_URL = 'https://dbtyzloscmhaskjlbyvl.supabase.co';
-const SUPABASE_KEY = process.env.VITE_SUPABASE_PUBLISHABLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRidHl6bG9zY21oYXNramxieXZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE3NjgzNjQsImV4cCI6MjA0NzM0NDM2NH0.R-nP0ZV5_dYUIKLuJXwUQI4WqV-nT13H3hAq9g0z1qY';
+const SUPABASE_KEY = process.env.VITE_SUPABASE_PUBLISHABLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRidHl6bG9zY21oYXNramxieXZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTczNTM3NzAsImV4cCI6MjA3MjkyOTc3MH0.klxb83dKGK6FkdpqkNOBmyIUKKxPilNtl4VqxToe_QU';
 const SITE_URL = process.env.VITE_SITE_URL || 'https://kennedynespot.com';
 
 const publicDir = path.join(process.cwd(), 'public');
