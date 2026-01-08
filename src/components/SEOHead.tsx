@@ -43,11 +43,32 @@ export function SEOHead({
 
   const finalDescription = description || settings?.seo_default_description || "Learn institutional trading concepts with structured education, mentorship, and the D.R.I.V.E Framework.";
 
+  // Generate canonical URL with proper normalization
   let canonicalHref: string | undefined;
-  if (canonical) {
-    canonicalHref = createCanonicalUrl(canonical);
-  } else if (typeof window !== 'undefined' && window.location?.pathname) {
-    canonicalHref = createCanonicalUrl(window.location.pathname + window.location.search + window.location.hash);
+  try {
+    if (canonical) {
+      // If canonical is explicitly provided, use it
+      canonicalHref = createCanonicalUrl(canonical);
+    } else if (typeof window !== 'undefined' && window.location?.pathname) {
+      // Auto-generate canonical from current pathname (ignoring query params and hash for canonical)
+      const pathname = window.location.pathname;
+      canonicalHref = createCanonicalUrl(pathname);
+    } else {
+      // Fallback to site root
+      canonicalHref = createCanonicalUrl('/');
+    }
+
+    // Log canonical URL for debugging
+    if (import.meta.env.DEV) {
+      console.debug('[SEOHead] Canonical URL set', {
+        providedCanonical: canonical,
+        currentPathname: typeof window !== 'undefined' ? window.location.pathname : 'n/a',
+        finalCanonical: canonicalHref
+      });
+    }
+  } catch (error) {
+    console.error('[SEOHead] Error generating canonical URL:', error);
+    canonicalHref = createCanonicalUrl('/');
   }
 
   const rawOgImage = ogImage || settings?.seo_default_og_image || '/og/og-default.jpg';
