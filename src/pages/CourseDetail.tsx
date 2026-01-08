@@ -86,7 +86,7 @@ export default function CourseDetail() {
       <SEOHead
         title={`${course.title} - Trading Course`}
         description={course.description}
-        canonical={`/courses/${course.slug}`}
+        canonical={createCanonicalUrl(`/courses/${course.slug}`)}
         keywords={course.tags.join(', ')}
       />
       
