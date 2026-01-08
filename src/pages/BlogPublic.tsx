@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Search, Calendar, Clock, User, Tag, ArrowLeft, ArrowRight, Star, Loader2, AlertCircle } from 'lucide-react';
 import { SEOHead } from '@/components/SEOHead';
+import { createCanonicalUrl } from '@/utils/seoHelpers';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
@@ -301,7 +302,7 @@ export default function BlogPublic() {
       <SEOHead
         title={t('blog_hero_title')}
         description={t('blog_hero_subtitle')}
-        canonical="/blog"
+        canonical={createCanonicalUrl('/blog')}
         ogImage="/og/og-default.jpg"
       />
       

@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SEOHead } from '@/components/SEOHead';
 import { useSiteContent } from '@/hooks/useSiteContent';
 import { useCourse } from '@/hooks/useResources';
+import { createCanonicalUrl } from '@/utils/seoHelpers';
 import { useMemo } from 'react';
 import { Clock, User, Calendar, Tag, ArrowLeft, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -85,7 +86,7 @@ export default function CourseDetail() {
       <SEOHead
         title={`${course.title} - Trading Course`}
         description={course.description}
-        canonical={`/courses/${course.slug}`}
+        canonical={createCanonicalUrl(`/courses/${course.slug}`)}
         keywords={course.tags.join(', ')}
       />
       

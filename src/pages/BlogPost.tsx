@@ -423,7 +423,7 @@ export default function BlogPost() {
       <SEOHead
         title={getLocalizedField(post, 'meta_title', language) || `${post.title} | KenneDyne spot`}
         description={getLocalizedField(post, 'meta_description', language) || post.excerpt}
-        canonical={post.canonical_url || `/blog/${post.slug}`}
+        canonical={createCanonicalUrl(post.canonical_url || `/blog/${post.slug}`)}
         ogImage={post.og_image_url || post.featured_image_url || '/og/og-default.jpg'}
         ogType="article"
         schema={generateJSONLD()}

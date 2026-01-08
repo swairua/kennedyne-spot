@@ -7,12 +7,14 @@ Disallow: /auth
 Disallow: /_health
 Disallow: /debug/
 
-# Disallow duplicate content parameters and query strings that create soft 404s
+# Block problematic duplicate content parameters
+# These cause soft 404s and waste crawl budget
 Disallow: /*?*sort=
 Disallow: /*?*filter=
-Disallow: /*?*page=*&
 Disallow: /*?*redirect=
-Disallow: /?*
+# Note: Removed "Disallow: /?*" - was too aggressive and blocked homepage
+# Note: Allow pagination with ?page= parameter for legitimate content discovery
+# Note: Allow other common query params like ?utm_*, ?gclid=, ?ref= for analytics
 
 # Allow static assets and resources
 Allow: *.css$
@@ -34,7 +36,11 @@ Disallow: /admin
 Disallow: /auth
 Disallow: /_health
 Disallow: /debug/
-Disallow: /*?*
+# Removed overly aggressive "Disallow: /*?*"
+# Now more specific about which query params to block
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+Disallow: /*?*redirect=
 Crawl-delay: 0.5
 
 User-agent: Googlebot-Image
@@ -47,7 +53,9 @@ Allow: /
 Disallow: /admin
 Disallow: /auth
 Disallow: /_health
-Disallow: /*?*
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+Disallow: /*?*redirect=
 Crawl-delay: 1
 
 # Block bad bots

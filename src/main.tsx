@@ -223,50 +223,91 @@ if (typeof window !== 'undefined') {
 if (typeof window !== 'undefined' && import.meta.env.VITE_GA_MEASUREMENT_ID) {
   const gaId = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
-  // Initialize dataLayer and gtag function
-  window.dataLayer = window.dataLayer || [];
-  function gtag(...args: any[]) {
-    window.dataLayer.push(args);
-  }
-  window.gtag = gtag;
+  try {
+    // Initialize dataLayer and gtag function
+    window.dataLayer = window.dataLayer || [];
+    function gtag(...args: any[]) {
+      window.dataLayer.push(args);
+    }
+    window.gtag = gtag;
 
-  // Set up Google Consent Mode v2 before loading GA
-  gtag('consent', 'default', {
-    analytics_storage: 'denied',
-    ad_storage: 'denied',
-    functionality_storage: 'denied',
-    personalization_storage: 'denied',
-    security_storage: 'granted',
-    wait_for_update: 2000,
-  });
+    // Check for existing consent from localStorage
+    let savedConsent = null;
+    try {
+      const consentData = localStorage.getItem('consent_state');
+      if (consentData) {
+        savedConsent = JSON.parse(consentData);
+      }
+    } catch (e) {
+      console.debug('[GA4] Failed to retrieve saved consent:', e);
+    }
 
-  gtag('js', new Date());
-  gtag('config', gaId, {
-    anonymize_ip: true,
-    cookie_flags: 'SameSite=Strict;Secure'
-  });
+    // Set up Google Consent Mode v2 before loading GA
+    // Default to 'denied' for GDPR compliance, but use saved consent if available
+    const analyticsConsent = savedConsent?.analytics === true ? 'granted' : 'denied';
+    const adConsent = savedConsent?.marketing === true ? 'granted' : 'denied';
 
-  // Load Google Analytics script
-  const gaScript = document.createElement('script');
-  gaScript.async = true;
-  gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
-  document.head.appendChild(gaScript);
+    gtag('consent', 'default', {
+      analytics_storage: analyticsConsent,
+      ad_storage: adConsent,
+      functionality_storage: 'denied',
+      personalization_storage: adConsent,
+      security_storage: 'granted',
+      wait_for_update: 2000,
+    });
 
-  if (import.meta.env.DEV) {
-    console.debug('[GA4] Initialized in main.tsx', { gaId });
+    console.debug('[GA4] Consent mode initialized', {
+      gaId,
+      analytics_storage: analyticsConsent,
+      ad_storage: adConsent,
+      hasSavedConsent: !!savedConsent
+    });
+
+    gtag('js', new Date());
+    gtag('config', gaId, {
+      anonymize_ip: true,
+      cookie_flags: 'SameSite=Strict;Secure'
+    });
+
+    console.debug('[GA4] Configuration applied', { gaId });
+
+    // Load Google Analytics script
+    const gaScript = document.createElement('script');
+    gaScript.async = true;
+    gaScript.id = 'google-analytics-script';
+    gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+
+    // Add error and load event listeners for debugging
+    gaScript.onerror = () => {
+      console.error('[GA4] Failed to load GA script', { gaId });
+    };
+    gaScript.onload = () => {
+      console.debug('[GA4] GA script loaded successfully', { gaId });
+    };
+
+    document.head.appendChild(gaScript);
+    console.debug('[GA4] GA script injected into head', { gaId });
+  } catch (error) {
+    console.error('[GA4] Initialization failed:', error);
   }
 }
 
 // Defer conversion tracking initialization
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && import.meta.env.VITE_GA_MEASUREMENT_ID) {
   const initTracking = () => {
-    initializeConversionTracking({
-      googleAdsId: 'AW-123456789', // Replace with actual Google Ads ID
-      ga4Id: import.meta.env.VITE_GA_MEASUREMENT_ID || 'G-XXXXXXXXXX',
-      gtmId: import.meta.env.VITE_GTM_ID || 'GTM-XXXXXXX',
-      facebookPixelId: '123456789012345', // Replace with actual Facebook Pixel ID
-      debug: false
-    });
+    try {
+      initializeConversionTracking({
+        ga4Id: import.meta.env.VITE_GA_MEASUREMENT_ID,
+        gtmId: import.meta.env.VITE_GTM_ID || undefined,
+        debug: import.meta.env.DEV
+      });
+      console.debug('[Conversion Tracking] Initialized', {
+        ga4Id: import.meta.env.VITE_GA_MEASUREMENT_ID,
+        gtmId: import.meta.env.VITE_GTM_ID
+      });
+    } catch (error) {
+      console.error('[Conversion Tracking] Initialization failed:', error);
+    }
   };
 
   if ('requestIdleCallback' in window) {
