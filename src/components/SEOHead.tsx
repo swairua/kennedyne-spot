@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useSiteSettingsFixed } from '@/hooks/useSiteSettingsFixed';
-import { createCanonicalUrl, toAbsoluteUrl, getSiteUrl } from '@/utils/seoHelpers';
+import { createCanonicalUrl, toAbsoluteUrl, getSiteUrl, normalizeTrailingSlash } from '@/utils/seoHelpers';
 interface LcpPreload {
   href: string;
   media?: string;
