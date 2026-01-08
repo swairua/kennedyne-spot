@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/generate-favicon.js && vite build",
-    "build:dev": "node scripts/generate-favicon.js && vite build --mode development",
+    "build": "node scripts/generate-favicon.js && node scripts/generate-blog-sitemap.js && vite build",
+    "build:dev": "node scripts/generate-favicon.js && node scripts/generate-blog-sitemap.js && vite build --mode development",
     "generate:favicon": "node scripts/generate-favicon.js",
+    "generate:sitemaps": "node scripts/generate-blog-sitemap.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
