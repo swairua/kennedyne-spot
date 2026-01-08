@@ -302,7 +302,7 @@ export default function BlogPublic() {
       <SEOHead
         title={t('blog_hero_title')}
         description={t('blog_hero_subtitle')}
-        canonical="/blog"
+        canonical={createCanonicalUrl('/blog')}
         ogImage="/og/og-default.jpg"
       />
       
