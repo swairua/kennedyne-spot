@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useI18n } from '@/i18n';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -18,19 +18,32 @@ export function CookieBanner() {
     necessary: true,
   });
 
+  // Initialize tempConsent with current consent state when banner appears
+  useEffect(() => {
+    if (showBanner && consent) {
+      setTempConsent(consent);
+      console.debug('[CookieBanner] Initialized with consent state', consent);
+    }
+  }, [showBanner, consent]);
+
   if (!showBanner) return null;
 
   const handleSaveSettings = () => {
+    console.debug('[CookieBanner] Saving settings', tempConsent);
     saveConsent(tempConsent);
     setShowSettings(false);
   };
 
   const handleToggle = (key: keyof ConsentState) => {
     if (key === 'necessary') return; // Can't disable necessary cookies
-    setTempConsent(prev => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
+    setTempConsent(prev => {
+      const updated = {
+        ...prev,
+        [key]: !prev[key],
+      };
+      console.debug('[CookieBanner] Toggled consent', { key, newValue: updated[key] });
+      return updated;
+    });
   };
 
   return (
