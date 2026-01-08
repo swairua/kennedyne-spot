@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Search, Calendar, Clock, User, Tag, ArrowLeft, ArrowRight, Star, Loader2, AlertCircle } from 'lucide-react';
 import { SEOHead } from '@/components/SEOHead';
+import { createCanonicalUrl } from '@/utils/seoHelpers';
 import { Navigation } from '@/components/Navigation';
 import { Footer } from '@/components/Footer';
 import { WhatsAppButton } from '@/components/WhatsAppButton';
