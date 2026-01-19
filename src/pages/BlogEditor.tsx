@@ -55,6 +55,11 @@ interface BlogPost {
   schema_json_ld?: any;
   featured_image_url?: string;
   author_id: string;
+  // CTA Fields
+  cta_type?: string;
+  cta_title?: string;
+  cta_url?: string;
+  cta_enabled?: boolean;
   // Translations
   title_fr?: string;
   title_es?: string;
