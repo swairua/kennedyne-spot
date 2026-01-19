@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import remarkSmartypants from 'remark-smartypants';
 import remarkToc from 'remark-toc';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
