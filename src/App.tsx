@@ -61,6 +61,7 @@ const AdminLayout = lazy(() => import("./layouts/AdminLayout").then(m => ({ defa
 const LP_DriveEducation = lazy(() => import("./pages/LP_DriveEducation"));
 const PlacementQuiz = lazy(() => import("./pages/PlacementQuiz"));
 const AdminTranslate = lazy(() => import("./pages/AdminTranslate"));
+const AdminMigrations = lazy(() => import("./pages/AdminMigrations"));
 const DebugGA = lazy(() => import("./pages/DebugGA"));
 
 const queryClient = new QueryClient({
