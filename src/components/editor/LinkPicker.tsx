@@ -265,7 +265,7 @@ export const LinkPicker: React.FC<LinkPickerProps> = ({
                 <Label htmlFor="external-url">Full URL</Label>
                 <Input
                   id="external-url"
-                  placeholder="https://kennedynespot.com or https://external-site.com"
+                  placeholder="https://example.com"
                   value={externalUrl}
                   onChange={(e) => setExternalUrl(e.target.value)}
                   autoFocus
@@ -275,13 +275,26 @@ export const LinkPicker: React.FC<LinkPickerProps> = ({
                 </p>
               </div>
 
-              <div className="bg-muted p-3 rounded-lg text-sm space-y-2">
-                <p className="font-medium">Helpful Tips:</p>
-                <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
-                  <li>Always use https:// for secure websites</li>
-                  <li>Make sure the URL is valid and accessible</li>
-                  <li>Test the link after saving to ensure it works</li>
-                </ul>
+              <div className="bg-muted p-3 rounded-lg text-sm space-y-3">
+                <div>
+                  <p className="font-medium mb-2">Example URLs:</p>
+                  <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                    <li>External resource: <code className="bg-background px-1.5 py-0.5 rounded text-foreground">https://example.com/course</code></li>
+                    <li>PDF document: <code className="bg-background px-1.5 py-0.5 rounded text-foreground">https://example.com/guide.pdf</code></li>
+                    <li>Video platform: <code className="bg-background px-1.5 py-0.5 rounded text-foreground">https://youtube.com/watch?v=...</code></li>
+                    <li>Your domain subdomain: <code className="bg-background px-1.5 py-0.5 rounded text-foreground">https://kennedynespot.com/resources</code></li>
+                  </ul>
+                </div>
+
+                <div className="border-t border-background/30 pt-3">
+                  <p className="font-medium mb-2">Best Practices:</p>
+                  <ul className="text-xs text-muted-foreground space-y-1 list-disc list-inside">
+                    <li>Always use https:// for secure websites</li>
+                    <li>Include full URL with domain name</li>
+                    <li>Test the link after saving to ensure it works</li>
+                    <li>Ensure the destination is mobile-friendly</li>
+                  </ul>
+                </div>
               </div>
 
               <div className="flex-1" />
