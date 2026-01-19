@@ -31,6 +31,25 @@ export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> =
   components: customComponents = {}
 }) => {
   const headings = React.useMemo(() => extractHeadings(content), [content]);
+  const [disableSmartypants, setDisableSmartypants] = React.useState(false);
+  const [renderError, setRenderError] = React.useState<Error | null>(null);
+
+  // Handle errors during markdown rendering
+  const handleRenderError = React.useCallback((error: Error) => {
+    console.error('Markdown rendering error:', error);
+
+    if (error.message?.includes('Invalid regular expression')) {
+      // Try again without smartypants plugin
+      if (!disableSmartypants) {
+        setDisableSmartypants(true);
+        setRenderError(null);
+      } else {
+        setRenderError(error);
+      }
+    } else {
+      setRenderError(error);
+    }
+  }, [disableSmartypants]);
 
   // Custom components for markdown rendering
   const components = {
