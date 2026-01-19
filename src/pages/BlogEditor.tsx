@@ -162,6 +162,7 @@ export default function BlogEditor() {
   const [showCancelDialog, setShowCancelDialog] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [translating, setTranslating] = useState(false);
+  const [showLinkPicker, setShowLinkPicker] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Function to insert text at cursor position
