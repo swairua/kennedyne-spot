@@ -1255,17 +1255,28 @@ export default function BlogEditor() {
                           <Label htmlFor="cta_url">
                             {post.cta_type === 'whatsapp' ? 'WhatsApp Number' : post.cta_type === 'email' ? 'Email Address' : post.cta_type === 'phone' ? 'Phone Number' : 'URL'}
                           </Label>
-                          <Input
-                            id="cta_url"
-                            value={post.cta_url || ''}
-                            onChange={(e) => setPost(prev => ({ ...prev, cta_url: e.target.value }))}
-                            placeholder={
-                              post.cta_type === 'whatsapp' ? '+1234567890' :
-                              post.cta_type === 'email' ? 'hello@example.com' :
-                              post.cta_type === 'phone' ? '+1234567890' :
-                              'https://example.com'
-                            }
-                          />
+                          <div className="flex gap-2">
+                            <Input
+                              id="cta_url"
+                              value={post.cta_url || ''}
+                              onChange={(e) => setPost(prev => ({ ...prev, cta_url: e.target.value }))}
+                              placeholder={
+                                post.cta_type === 'whatsapp' ? '+1234567890' :
+                                post.cta_type === 'email' ? 'hello@example.com' :
+                                post.cta_type === 'phone' ? '+1234567890' :
+                                'https://example.com'
+                              }
+                            />
+                            {post.cta_type === 'link' && (
+                              <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => setShowLinkPicker(true)}
+                              >
+                                Pick Link
+                              </Button>
+                            )}
+                          </div>
                           <p className="text-xs text-muted-foreground mt-1">
                             {post.cta_type === 'whatsapp' ? 'WhatsApp number with country code' :
                              post.cta_type === 'email' ? 'Email address' :
