@@ -47,6 +47,10 @@ interface BlogPost {
   og_image_url?: string;
   schema_type: string;
   schema_json_ld?: any;
+  cta_type?: string;
+  cta_title?: string;
+  cta_url?: string;
+  cta_enabled?: boolean;
   authors?: { name: string; slug: string; bio?: string; avatar_url?: string }[];
   categories?: { name: string; slug: string }[];
   tags?: { name: string; slug: string }[];
