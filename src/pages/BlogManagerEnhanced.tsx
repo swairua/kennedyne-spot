@@ -961,7 +961,7 @@ Understanding these concepts is crucial for trading success. Continue your educa
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                   <div className="text-sm text-blue-900 dark:text-blue-200">
-                    <p className="font-medium mb-1">Add CTA Fields to Blog Posts</p>
+                    <p className="font-medium mb-1">✨ Add CTA Fields to Blog Posts</p>
                     <p>This migration adds custom call-to-action (CTA) button support to blog posts. You'll be able to configure unique CTAs for each blog post.</p>
                   </div>
                 </div>
@@ -969,16 +969,16 @@ Understanding these concepts is crucial for trading success. Continue your educa
             </Card>
 
             {migrationResult && (
-              <Card className={migrationResult.success ? "border-green-200 bg-green-50 dark:bg-green-900/20" : "border-red-200 bg-red-50 dark:bg-red-900/20"}>
+              <Card className={migrationResult.success ? "border-green-200 bg-green-50 dark:bg-green-900/20" : "border-amber-200 bg-amber-50 dark:bg-amber-900/20"}>
                 <CardContent className="pt-6">
                   <div className="flex items-start gap-3">
                     {migrationResult.success ? (
                       <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
                     ) : (
-                      <AlertTriangle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
+                      <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
                     )}
-                    <div className={`text-sm ${migrationResult.success ? 'text-green-900 dark:text-green-200' : 'text-red-900 dark:text-red-200'}`}>
-                      <p className="font-medium">{migrationResult.success ? 'Success' : 'Failed'}</p>
+                    <div className={`text-sm ${migrationResult.success ? 'text-green-900 dark:text-green-200' : 'text-amber-900 dark:text-amber-200'}`}>
+                      <p className="font-medium">{migrationResult.success ? '✓ Success' : 'ℹ️ Manual Method Required'}</p>
                       <p className="mt-1">{migrationResult.message}</p>
                     </div>
                   </div>
@@ -986,38 +986,55 @@ Understanding these concepts is crucial for trading success. Continue your educa
               </Card>
             )}
 
-            <div className="space-y-3">
-              <h4 className="font-medium text-sm">Options:</h4>
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-medium text-sm mb-3">How to Run:</h4>
+                <p className="text-xs text-muted-foreground mb-3">
+                  The easiest way is to copy the SQL and run it in Supabase SQL Editor:
+                </p>
+              </div>
+
               <div className="flex gap-2">
+                <Button
+                  onClick={handleCopySql}
+                  className="flex-1 bg-primary hover:bg-primary/90"
+                  size="sm"
+                >
+                  <Copy className="h-4 w-4 mr-2" />
+                  Copy SQL to Clipboard
+                </Button>
                 <Button
                   onClick={handleRunMigration}
                   disabled={migrationRunning}
+                  variant="outline"
                   className="flex-1"
+                  size="sm"
                 >
                   {migrationRunning ? (
                     <>
                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Running Migration...
+                      Running...
                     </>
                   ) : (
                     <>
                       <Database className="h-4 w-4 mr-2" />
-                      Run Migration
+                      Try Auto
                     </>
                   )}
                 </Button>
-                <Button
-                  variant="outline"
-                  onClick={handleCopySql}
-                  className="flex-1"
-                >
-                  <Copy className="h-4 w-4 mr-2" />
-                  Copy SQL
-                </Button>
               </div>
-              <p className="text-xs text-muted-foreground">
-                "Run Migration" uses Supabase RPC (may not be available). "Copy SQL" lets you paste into Supabase SQL Editor.
-              </p>
+
+              <div className="bg-muted p-3 rounded-lg text-xs space-y-2">
+                <p className="font-medium">Steps to manually run:</p>
+                <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
+                  <li>Click "Copy SQL to Clipboard" above</li>
+                  <li>Go to <a href="https://app.supabase.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Supabase Dashboard</a></li>
+                  <li>Select your project</li>
+                  <li>Go to <strong>SQL Editor</strong> → <strong>New Query</strong></li>
+                  <li>Paste the SQL</li>
+                  <li>Click <strong>Run</strong></li>
+                </ol>
+              </div>
             </div>
           </div>
 
