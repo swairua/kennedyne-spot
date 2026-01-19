@@ -104,6 +104,9 @@ export default function BlogManagerEnhanced() {
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
   const [showImportModal, setShowImportModal] = useState(false);
+  const [showMigrationModal, setShowMigrationModal] = useState(false);
+  const [migrationRunning, setMigrationRunning] = useState(false);
+  const [migrationResult, setMigrationResult] = useState<{success: boolean; message: string} | null>(null);
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
   const [postToDelete, setPostToDelete] = useState<BlogPost | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
