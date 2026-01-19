@@ -24,8 +24,8 @@ export const sanitizePhoneNumber = (phone: string | null | undefined): string =>
  */
 const normalizeMessage = (message: string): string => {
   return message
-    .replace(/[""]/g, '"')  // Replace curly double quotes
-    .replace(/['']/g, "'"); // Replace curly single quotes
+    .replace(/[\u201C\u201D]/g, '"')  // Replace curly double quotes (U+201C, U+201D)
+    .replace(/[\u2018\u2019]/g, "'"); // Replace curly single quotes (U+2018, U+2019)
 };
 
 /**
