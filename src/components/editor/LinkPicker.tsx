@@ -30,6 +30,8 @@ interface LinkPickerProps {
   currentUrl?: string;
 }
 
+const PRODUCTION_BASE_URL = 'https://kennedynespot.com';
+
 const INTERNAL_ROUTES = [
   { label: 'Home', href: '/', category: 'Main' },
   { label: 'Blog', href: '/blog', category: 'Main' },
