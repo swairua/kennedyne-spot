@@ -239,7 +239,7 @@ export const LinkPicker: React.FC<LinkPickerProps> = ({
                               {route.label}
                             </div>
                             <div className="text-sm text-muted-foreground">
-                              {route.href}
+                              {PRODUCTION_BASE_URL}{route.href}
                             </div>
                           </button>
                         ))}
