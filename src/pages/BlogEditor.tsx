@@ -164,6 +164,7 @@ export default function BlogEditor() {
   const [translating, setTranslating] = useState(false);
   const [showLinkPicker, setShowLinkPicker] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const lastSyncedSlugRef = useRef<string>('');
 
   // Function to insert text at cursor position
   const insertTextAtCursor = (textToInsert: string) => {
