@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Calendar, Clock, User, Tag, Share2, Copy, 
+import {
+  Calendar, Clock, User, Tag, Share2, Copy,
   ArrowLeft, Eye, Twitter, Facebook, Linkedin,
-  MessageCircle
+  MessageCircle, Mail, Phone, ExternalLink
 } from 'lucide-react';
 import { SEOHead } from '@/components/SEOHead';
 import { SectionDivider } from '@/components/SectionDivider';
