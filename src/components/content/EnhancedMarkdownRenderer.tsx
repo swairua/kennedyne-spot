@@ -275,16 +275,6 @@ export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> =
     ...customComponents
   };
 
-  if (renderError && disableSmartypants) {
-    return (
-      <div className="relative">
-        <div className="text-sm text-destructive p-4 bg-destructive/10 rounded">
-          <p>Unable to render content due to browser compatibility issues.</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="relative">
       {showProgress && <ReadingProgressBar />}
@@ -308,7 +298,6 @@ export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> =
               content={content}
               components={components}
               disableSmartypants={disableSmartypants}
-              onError={handleRenderError}
             />
           </div>
         </article>
