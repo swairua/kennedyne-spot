@@ -589,13 +589,6 @@ Understanding these concepts is crucial for trading success. Continue your educa
             </TooltipContent>
           </Tooltip>
 
-          <Button
-            variant="outline"
-            onClick={() => setShowImportModal(true)}
-            className="mr-2"
-          >
-            Import Legacy Posts
-          </Button>
           <Button asChild>
             <Link to="/admin/blog/new">
               <Plus className="h-4 w-4 mr-2" />
