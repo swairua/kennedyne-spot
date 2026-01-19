@@ -10,18 +10,24 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { 
-  Eye, 
-  Edit, 
-  Trash2, 
-  Star, 
-  Plus, 
-  Users, 
+import { runMigration, getMigrationSQL } from "@/utils/runMigration";
+import {
+  Eye,
+  Edit,
+  Trash2,
+  Star,
+  Plus,
+  Users,
   Search,
   ArrowUpDown,
   ExternalLink,
   PowerOff,
-  Power
+  Power,
+  Database,
+  Copy,
+  Loader2,
+  Check,
+  AlertTriangle
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
