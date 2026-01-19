@@ -33,8 +33,8 @@ export const formatTypography = (content: string): string => {
     .replace(/(\d+)\s+(KES|USD|EUR|GBP)/g, '$1\u00A0$2')
     // Between numbers and units
     .replace(/(\d+)\s+(kg|km|m|cm|mm|kW|MW|%)/g, '$1\u00A0$2')
-    // Between numbers and symbols
-    .replace(/(\d+)\s*([°%])/g, '$1\u00A0$2');
+    // Between numbers and symbols (degree symbol is U+00B0)
+    .replace(/(\d+)\s*([\u00B0%])/g, '$1\u00A0$2');
 
   return formatted;
 };
