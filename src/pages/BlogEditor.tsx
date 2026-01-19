@@ -1194,6 +1194,94 @@ export default function BlogEditor() {
                     </div>
                   </CardContent>
                 </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Call-to-Action (CTA)</CardTitle>
+                    <p className="text-sm text-muted-foreground mt-2">
+                      Configure a custom button at the end of this blog post
+                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <Label htmlFor="cta_enabled" className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          id="cta_enabled"
+                          checked={post.cta_enabled ?? true}
+                          onChange={(e) => setPost(prev => ({ ...prev, cta_enabled: e.target.checked }))}
+                          className="rounded"
+                        />
+                        <span>Show CTA on this post</span>
+                      </Label>
+                    </div>
+
+                    {post.cta_enabled !== false && (
+                      <>
+                        <div>
+                          <Label htmlFor="cta_type">CTA Type</Label>
+                          <Select
+                            value={post.cta_type || 'whatsapp'}
+                            onValueChange={(value) => setPost(prev => ({ ...prev, cta_type: value }))}
+                          >
+                            <SelectTrigger id="cta_type">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="whatsapp">WhatsApp</SelectItem>
+                              <SelectItem value="link">Website Link</SelectItem>
+                              <SelectItem value="email">Email</SelectItem>
+                              <SelectItem value="phone">Phone Call</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div>
+                          <Label htmlFor="cta_title">Button Text</Label>
+                          <Input
+                            id="cta_title"
+                            value={post.cta_title || ''}
+                            onChange={(e) => setPost(prev => ({ ...prev, cta_title: e.target.value }))}
+                            placeholder={`e.g., "${post.cta_type === 'whatsapp' ? 'Contact on WhatsApp' : post.cta_type === 'email' ? 'Email Us' : post.cta_type === 'phone' ? 'Call Us' : 'Learn More'}"`}
+                          />
+                          <p className="text-xs text-muted-foreground mt-1">
+                            The text that appears on the button
+                          </p>
+                        </div>
+
+                        <div>
+                          <Label htmlFor="cta_url">
+                            {post.cta_type === 'whatsapp' ? 'WhatsApp Number' : post.cta_type === 'email' ? 'Email Address' : post.cta_type === 'phone' ? 'Phone Number' : 'URL'}
+                          </Label>
+                          <Input
+                            id="cta_url"
+                            value={post.cta_url || ''}
+                            onChange={(e) => setPost(prev => ({ ...prev, cta_url: e.target.value }))}
+                            placeholder={
+                              post.cta_type === 'whatsapp' ? '+1234567890' :
+                              post.cta_type === 'email' ? 'hello@example.com' :
+                              post.cta_type === 'phone' ? '+1234567890' :
+                              'https://example.com'
+                            }
+                          />
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {post.cta_type === 'whatsapp' ? 'WhatsApp number with country code' :
+                             post.cta_type === 'email' ? 'Email address' :
+                             post.cta_type === 'phone' ? 'Phone number with country code' :
+                             'Full URL starting with https://'}
+                          </p>
+                        </div>
+
+                        <div className="p-3 bg-muted rounded-lg text-sm">
+                          <p className="font-medium mb-2">Preview:</p>
+                          <Button disabled className="w-full">
+                            {post.cta_title || `Contact on ${post.cta_type === 'whatsapp' ? 'WhatsApp' : post.cta_type === 'email' ? 'Email' : post.cta_type === 'phone' ? 'Phone' : 'our site'}`}
+                          </Button>
+                        </div>
+                      </>
+                    )}
+                  </CardContent>
+                </Card>
               </div>
             </div>
 
