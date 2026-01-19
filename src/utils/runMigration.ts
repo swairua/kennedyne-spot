@@ -1,5 +1,9 @@
 import { supabase } from '@/integrations/supabase/client';
 
+// Supabase URL for Edge Function calls
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://dbtyzloscmhaskjlbyvl.supabase.co';
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || '';
+
 // Migration SQL content (embedded)
 const MIGRATIONS: Record<string, string> = {
   '001_add_blog_cta_fields': `
@@ -9,10 +13,6 @@ ADD COLUMN IF NOT EXISTS cta_type VARCHAR(20) DEFAULT 'whatsapp',
 ADD COLUMN IF NOT EXISTS cta_title VARCHAR(255),
 ADD COLUMN IF NOT EXISTS cta_url TEXT,
 ADD COLUMN IF NOT EXISTS cta_enabled BOOLEAN DEFAULT true;
-
--- Add constraints
-ALTER TABLE blog_posts
-ADD CONSTRAINT valid_cta_type CHECK (cta_type IN ('whatsapp', 'link', 'email', 'phone'));
 
 -- Add comments for clarity
 COMMENT ON COLUMN blog_posts.cta_type IS 'Type of CTA: whatsapp, link, email, phone (default: whatsapp)';
