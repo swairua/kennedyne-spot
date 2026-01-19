@@ -1281,7 +1281,7 @@ export default function BlogEditor() {
                             {post.cta_type === 'whatsapp' ? 'WhatsApp number with country code' :
                              post.cta_type === 'email' ? 'Email address' :
                              post.cta_type === 'phone' ? 'Phone number with country code' :
-                             'Full URL starting with https://'}
+                             'Use "Pick Link" button to select a blog post or page'}
                           </p>
                         </div>
 
