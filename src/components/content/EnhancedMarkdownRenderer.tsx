@@ -66,7 +66,6 @@ export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> =
   components: customComponents = {}
 }) => {
   const headings = React.useMemo(() => extractHeadings(content), [content]);
-  const [disableSmartypants, setDisableSmartypants] = React.useState(false);
 
   // Custom components for markdown rendering
   const components = {
