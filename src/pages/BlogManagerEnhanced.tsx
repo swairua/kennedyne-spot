@@ -275,6 +275,64 @@ export default function BlogManagerEnhanced() {
     }
   };
 
+  // Run database migration
+  const handleRunMigration = async () => {
+    setMigrationRunning(true);
+    setMigrationResult(null);
+
+    try {
+      const result = await runMigration('001_add_blog_cta_fields');
+      setMigrationResult(result);
+
+      if (result.success) {
+        toast({
+          title: 'Success',
+          description: result.message,
+        });
+      } else {
+        toast({
+          title: 'Migration Not Available',
+          description: result.message || 'Please run the migration manually via Supabase SQL Editor',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Migration error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      setMigrationResult({
+        success: false,
+        message: `Error: ${errorMessage}`
+      });
+      toast({
+        title: 'Error',
+        description: 'Failed to run migration',
+        variant: 'destructive',
+      });
+    } finally {
+      setMigrationRunning(false);
+    }
+  };
+
+  // Copy SQL to clipboard
+  const handleCopySql = async () => {
+    const sql = getMigrationSQL('001_add_blog_cta_fields');
+    if (sql) {
+      try {
+        await navigator.clipboard.writeText(sql);
+        toast({
+          title: 'Copied',
+          description: 'SQL copied to clipboard',
+        });
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: 'Failed to copy SQL',
+          variant: 'destructive',
+        });
+      }
+    }
+  };
+
   // Legacy posts data and import functionality
   const legacyPosts = [
     {
