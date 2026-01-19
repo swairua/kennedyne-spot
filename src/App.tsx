@@ -179,6 +179,11 @@ function App() {
                               <AdminTranslate />
                             </RequireRoles>
                           } />
+                          <Route path="migrations" element={
+                            <RequireRoles roles={['super_admin']}>
+                              <AdminMigrations />
+                            </RequireRoles>
+                          } />
                         </Route>
 
                         <Route path="/auth" element={<Auth />} />
