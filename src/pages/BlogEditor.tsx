@@ -392,14 +392,11 @@ export default function BlogEditor() {
 
   // Auto-populate CTA URL with current blog post URL when editing
   useEffect(() => {
-    if (!isNew && post.slug && post.cta_type === 'link') {
+    if (!isNew && post.slug && post.cta_type === 'link' && !post.cta_url) {
       const ctaUrl = `https://kennedynespot.com/blog/${post.slug}`;
-      // Only update if it's not already set or needs to be synced with slug
-      if (!post.cta_url || post.cta_url.includes('/blog/')) {
-        setPost(prev => ({ ...prev, cta_url: ctaUrl }));
-      }
+      setPost(prev => ({ ...prev, cta_url: ctaUrl }));
     }
-  }, [post.slug, isNew, post.cta_type]);
+  }, [isNew]);
 
   const handleSave = async (shouldPublish = false) => {
     try {
