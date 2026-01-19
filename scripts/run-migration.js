@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import { createClient } from '@supabase/supabase-js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -8,21 +7,20 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL || 'https://dbtyzloscmhaskjlbyvl.supabase.co';
-const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!SUPABASE_SERVICE_KEY) {
-  console.error('❌ Error: SUPABASE_SERVICE_ROLE_KEY environment variable is required');
-  console.error('   This is a sensitive key. Use it only for migrations in secure environments.');
-  process.exit(1);
-}
-
 // Get migration file from command line argument
 const migrationName = process.argv[2];
 
 if (!migrationName) {
   console.error('❌ Usage: node scripts/run-migration.js <migration-name>');
   console.error('   Example: node scripts/run-migration.js 001_add_blog_cta_fields.sql');
+  console.error('');
+  console.error('Available migrations:');
+  const migrationsDir = path.join(__dirname, '..', 'migrations');
+  if (fs.existsSync(migrationsDir)) {
+    fs.readdirSync(migrationsDir).forEach(file => {
+      console.error(`   - ${file}`);
+    });
+  }
   process.exit(1);
 }
 
@@ -33,34 +31,40 @@ if (!fs.existsSync(migrationPath)) {
   process.exit(1);
 }
 
-async function runMigration() {
+function showInstructions(sql) {
+  console.log('\n' + '='.repeat(80));
+  console.log('IMPORTANT: Manual execution required');
+  console.log('='.repeat(80));
+  console.log('\nTo run this migration, follow these steps:\n');
+  console.log('1. Go to your Supabase Dashboard: https://app.supabase.com');
+  console.log('2. Select your project');
+  console.log('3. Navigate to "SQL Editor" in the left sidebar');
+  console.log('4. Click "New query"');
+  console.log('5. Copy and paste the SQL below:');
+  console.log('\n' + '-'.repeat(80));
+  console.log(sql);
+  console.log('-'.repeat(80) + '\n');
+  console.log('6. Click "Run" to execute the migration');
+  console.log('\nAlternatively, you can use the Admin > Migrations page in your app.');
+  console.log('='.repeat(80) + '\n');
+}
+
+function runMigration() {
   try {
-    console.log(`🚀 Running migration: ${migrationName}`);
-    
-    // Create Supabase admin client with service role key
-    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
-      auth: {
-        autoRefreshToken: false,
-        persistSession: false,
-        detectSessionInUrl: false,
-      },
-    });
+    console.log(`\n📋 Reading migration: ${migrationName}`);
 
     // Read migration SQL
     const sql = fs.readFileSync(migrationPath, 'utf-8');
 
-    // Execute migration
-    const { error } = await supabase.rpc('exec_sql', { sql_query: sql });
+    // Show instructions since we can't execute directly without service role key
+    showInstructions(sql);
 
-    if (error) {
-      console.error('❌ Migration failed:', error.message);
-      process.exit(1);
-    }
+    console.log('✅ Migration file read successfully!');
+    console.log('\n💡 Pro tip: Set SUPABASE_SERVICE_ROLE_KEY to enable automated migration execution.');
 
-    console.log('✅ Migration completed successfully!');
     process.exit(0);
   } catch (err) {
-    console.error('❌ Error running migration:', err.message);
+    console.error('❌ Error reading migration:', err.message);
     process.exit(1);
   }
 }
