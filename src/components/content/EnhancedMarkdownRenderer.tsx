@@ -258,8 +258,15 @@ export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> =
     ...customComponents
   };
 
-  // State to track if smartypants should be disabled due to browser incompatibility
-  const [disableSmartypants, setDisableSmartypants] = React.useState(false);
+  if (renderError && disableSmartypants) {
+    return (
+      <div className="relative">
+        <div className="text-sm text-destructive p-4 bg-destructive/10 rounded">
+          <p>Unable to render content due to browser compatibility issues.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative">
@@ -280,44 +287,12 @@ export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> =
             "prose-th:border prose-th:border-border prose-th:bg-muted prose-th:px-4 prose-th:py-2",
             "prose-td:border prose-td:border-border prose-td:px-4 prose-td:py-2"
           )}>
-            <ErrorBoundary
-              fallback={
-                <div className="text-sm text-muted-foreground p-4 bg-muted/50 rounded">
-                  <p>Content rendering is temporarily unavailable. Attempting to reload...</p>
-                </div>
-              }
-              onError={(error) => {
-                if (error.message?.includes('Invalid regular expression')) {
-                  setDisableSmartypants(true);
-                }
-              }}
-            >
-              <ReactMarkdown
-                remarkPlugins={[
-                  remarkGfm,
-                  !disableSmartypants && remarkSmartypants,
-                  [remarkToc, { maxDepth: 3, tight: true }]
-                ].filter(Boolean)}
-                rehypePlugins={[
-                  rehypeRaw,
-                  rehypeSlug,
-                  [rehypeAutolinkHeadings, {
-                    behavior: 'wrap',
-                    properties: {
-                      className: 'anchor-link'
-                    }
-                  }],
-                  [rehypeExternalLinks, {
-                    target: '_blank',
-                    rel: 'noopener noreferrer'
-                  }]
-                ]}
-                components={components}
-                unwrapDisallowed={true}
-              >
-                {content}
-              </ReactMarkdown>
-            </ErrorBoundary>
+            <MarkdownRendererWrapper
+              content={content}
+              components={components}
+              disableSmartypants={disableSmartypants}
+              onError={handleRenderError}
+            />
           </div>
         </article>
 
