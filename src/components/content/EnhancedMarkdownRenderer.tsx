@@ -23,6 +23,35 @@ interface EnhancedMarkdownRendererProps {
   components?: Record<string, React.ComponentType<any>>;
 }
 
+// Error boundary for markdown rendering
+class MarkdownErrorBoundary extends React.Component<
+  {
+    children: React.ReactNode;
+    onError: (error: Error) => void;
+  },
+  { hasError: boolean }
+> {
+  constructor(props: { children: React.ReactNode; onError: (error: Error) => void }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error) {
+    this.props.onError(error);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return null;
+    }
+    return this.props.children;
+  }
+}
+
 // Wrapper component to handle markdown rendering with error handling
 const MarkdownRendererWrapper: React.FC<{
   content: string;
@@ -30,8 +59,8 @@ const MarkdownRendererWrapper: React.FC<{
   disableSmartypants: boolean;
   onError: (error: Error) => void;
 }> = ({ content, components, disableSmartypants, onError }) => {
-  try {
-    return (
+  return (
+    <MarkdownErrorBoundary onError={onError}>
       <ReactMarkdown
         remarkPlugins={[
           remarkGfm,
@@ -57,11 +86,8 @@ const MarkdownRendererWrapper: React.FC<{
       >
         {content}
       </ReactMarkdown>
-    );
-  } catch (error) {
-    onError(error instanceof Error ? error : new Error(String(error)));
-    return null;
-  }
+    </MarkdownErrorBoundary>
+  );
 };
 
 export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> = ({
