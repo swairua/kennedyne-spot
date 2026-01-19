@@ -192,7 +192,7 @@ export const LinkPicker: React.FC<LinkPickerProps> = ({
                         {post.title}
                       </div>
                       <div className="text-sm text-muted-foreground">
-                        /blog/{post.slug}
+                        {PRODUCTION_BASE_URL}/blog/{post.slug}
                       </div>
                     </button>
                   ))
