@@ -29,8 +29,8 @@ export interface MigrationResult {
 }
 
 /**
- * Run a migration using Supabase RPC function
- * Falls back to manual instructions if RPC fails
+ * Run a migration using Supabase Edge Function
+ * This is more reliable than RPC as it's deployed serverless
  */
 export async function runMigration(migrationKey: string): Promise<MigrationResult> {
   try {
@@ -44,47 +44,75 @@ export async function runMigration(migrationKey: string): Promise<MigrationResul
       };
     }
 
-    // Try using the exec function (if it exists)
-    try {
-      const { error, data } = await supabase.rpc('exec', {
-        sql_query: sql
-      });
+    // Get the session for auth header
+    const { data: { session } } = await supabase.auth.getSession();
 
-      if (error) {
-        console.error('RPC Error:', error);
-        throw error;
-      }
-
+    if (!session) {
       return {
-        success: true,
-        message: 'Migration executed successfully! CTA fields have been added to blog posts.'
+        success: false,
+        message: '🔐 You must be logged in to run migrations.',
+        error: 'Not authenticated'
       };
-    } catch (rpcError: any) {
-      console.error('RPC Error Details:', rpcError);
+    }
 
-      // Extract error message safely
-      const errorMessage = extractErrorMessage(rpcError);
+    // Call the Edge Function
+    try {
+      const response = await fetch(
+        `${SUPABASE_URL}/functions/v1/run-blog-cta-migration`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`,
+            'Content-Type': 'application/json',
+            'x-client-info': 'supabase-js-web'
+          },
+          body: JSON.stringify({
+            migration_key: migrationKey
+          })
+        }
+      );
 
-      // Check if it's specifically a function not found error
-      const isUnknownFunction =
-        errorMessage?.includes('Unknown function') ||
-        errorMessage?.includes('does not exist') ||
-        errorMessage?.includes('42883') ||
-        rpcError?.status === 404;
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const errorMessage = extractErrorMessage(errorData);
 
-      if (isUnknownFunction) {
         return {
           success: false,
-          message: 'ℹ️ RPC function not available. Use the "Copy SQL" button to manually run it in Supabase SQL Editor.',
-          error: 'RPC not configured'
+          message: '⚠️ Edge Function failed. Use the "Copy SQL" button to manually run it in Supabase SQL Editor.',
+          error: errorMessage || `HTTP ${response.status}`
         };
       }
 
-      // For any other RPC error
+      const result = await response.json();
+
+      if (result.success) {
+        return {
+          success: true,
+          message: '✅ Migration executed successfully! CTA fields have been added to blog posts.'
+        };
+      } else {
+        return {
+          success: false,
+          message: '⚠️ Migration execution failed. Use the "Copy SQL" button to manually run it in Supabase SQL Editor.',
+          error: result.error || 'Migration failed'
+        };
+      }
+    } catch (fetchError: any) {
+      console.error('Edge Function call error:', fetchError);
+
+      // Check if it's a network or Edge Function not deployed error
+      if (fetchError.message?.includes('fetch') || fetchError.message?.includes('Failed to fetch')) {
+        return {
+          success: false,
+          message: '📌 Edge Function not deployed yet. Use the "Copy SQL" button to manually run it in Supabase SQL Editor.',
+          error: 'Edge Function not available'
+        };
+      }
+
       return {
         success: false,
-        message: '⚠️ RPC execution failed. Use the "Copy SQL" button to manually run it in Supabase SQL Editor instead.',
-        error: errorMessage || 'RPC execution failed'
+        message: '⚠️ Migration request failed. Use the "Copy SQL" button to manually run it in Supabase SQL Editor.',
+        error: fetchError.message || 'Request failed'
       };
     }
   } catch (err: any) {
