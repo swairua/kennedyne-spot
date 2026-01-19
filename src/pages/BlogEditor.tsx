@@ -1673,6 +1673,14 @@ export default function BlogEditor() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Link Picker Modal */}
+      <LinkPicker
+        isOpen={showLinkPicker}
+        onClose={() => setShowLinkPicker(false)}
+        onSelect={(url) => setPost(prev => ({ ...prev, cta_url: url }))}
+        currentUrl={post.cta_url}
+      />
     </div>
   );
 }
