@@ -990,24 +990,15 @@ Understanding these concepts is crucial for trading success. Continue your educa
               <div>
                 <h4 className="font-medium text-sm mb-3">How to Run:</h4>
                 <p className="text-xs text-muted-foreground mb-3">
-                  The easiest way is to copy the SQL and run it in Supabase SQL Editor:
+                  Choose your preferred method:
                 </p>
               </div>
 
               <div className="flex gap-2">
                 <Button
-                  onClick={handleCopySql}
-                  className="flex-1 bg-primary hover:bg-primary/90"
-                  size="sm"
-                >
-                  <Copy className="h-4 w-4 mr-2" />
-                  Copy SQL to Clipboard
-                </Button>
-                <Button
                   onClick={handleRunMigration}
                   disabled={migrationRunning}
-                  variant="outline"
-                  className="flex-1"
+                  className="flex-1 bg-primary hover:bg-primary/90"
                   size="sm"
                 >
                   {migrationRunning ? (
@@ -1018,22 +1009,44 @@ Understanding these concepts is crucial for trading success. Continue your educa
                   ) : (
                     <>
                       <Database className="h-4 w-4 mr-2" />
-                      Try Auto
+                      Auto (Recommended)
                     </>
                   )}
                 </Button>
+                <Button
+                  onClick={handleCopySql}
+                  variant="outline"
+                  className="flex-1"
+                  size="sm"
+                >
+                  <Copy className="h-4 w-4 mr-2" />
+                  Manual SQL
+                </Button>
               </div>
 
-              <div className="bg-muted p-3 rounded-lg text-xs space-y-2">
-                <p className="font-medium">Steps to manually run:</p>
-                <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
-                  <li>Click "Copy SQL to Clipboard" above</li>
-                  <li>Go to <a href="https://app.supabase.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Supabase Dashboard</a></li>
-                  <li>Select your project</li>
-                  <li>Go to <strong>SQL Editor</strong> → <strong>New Query</strong></li>
-                  <li>Paste the SQL</li>
-                  <li>Click <strong>Run</strong></li>
-                </ol>
+              <div className="bg-muted p-3 rounded-lg text-xs space-y-3">
+                <div>
+                  <p className="font-medium mb-1">🤖 Auto Method (Recommended):</p>
+                  <p className="text-muted-foreground">
+                    Requires: Deploy the Edge Function once
+                  </p>
+                  <pre className="bg-background p-2 rounded mt-1 text-[10px] overflow-x-auto"><code>supabase functions deploy</code></pre>
+                  <p className="text-muted-foreground text-[10px] mt-1">
+                    After deployment, click "Auto (Recommended)" to run migrations instantly.
+                  </p>
+                </div>
+
+                <div className="border-t pt-2">
+                  <p className="font-medium mb-1">📝 Manual Method:</p>
+                  <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
+                    <li>Click "Manual SQL"</li>
+                    <li>Go to <a href="https://app.supabase.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Supabase Dashboard</a></li>
+                    <li>Navigate to <strong>SQL Editor</strong></li>
+                    <li>Create <strong>New Query</strong></li>
+                    <li>Paste the SQL</li>
+                    <li>Click <strong>Run</strong></li>
+                  </ol>
+                </div>
               </div>
             </div>
           </div>
