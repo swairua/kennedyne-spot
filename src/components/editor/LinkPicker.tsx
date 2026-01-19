@@ -95,12 +95,14 @@ export const LinkPicker: React.FC<LinkPickerProps> = ({
   );
 
   const handleBlogPostSelect = (slug: string) => {
-    onSelect(`/blog/${slug}`);
+    const fullUrl = `${PRODUCTION_BASE_URL}/blog/${slug}`;
+    onSelect(fullUrl);
     onClose();
   };
 
   const handleInternalRouteSelect = (href: string) => {
-    onSelect(href);
+    const fullUrl = `${PRODUCTION_BASE_URL}${href}`;
+    onSelect(fullUrl);
     onClose();
   };
 
