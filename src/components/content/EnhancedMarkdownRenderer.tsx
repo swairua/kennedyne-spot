@@ -27,15 +27,13 @@ interface EnhancedMarkdownRendererProps {
 const MarkdownRendererWrapper: React.FC<{
   content: string;
   components: Record<string, React.ComponentType<any>>;
-  disableSmartypants: boolean;
-}> = ({ content, components, disableSmartypants }) => {
+}> = ({ content, components }) => {
   return (
     <ReactMarkdown
       remarkPlugins={[
         remarkGfm,
-        !disableSmartypants && remarkSmartypants,
         [remarkToc, { maxDepth: 3, tight: true }]
-      ].filter(Boolean)}
+      ]}
       rehypePlugins={[
         rehypeRaw,
         rehypeSlug,
