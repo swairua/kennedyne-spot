@@ -27,6 +27,7 @@ import MarkdownGuide from '@/components/content/MarkdownGuide';
 import { ImageInput } from '@/components/ui/image-input';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { RichTextEditor } from '@/components/editor/RichTextEditor';
+import { LinkPicker } from '@/components/editor/LinkPicker';
 
 const NAIROBI_TZ = 'Africa/Nairobi';
 
