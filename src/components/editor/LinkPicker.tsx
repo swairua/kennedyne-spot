@@ -265,13 +265,13 @@ export const LinkPicker: React.FC<LinkPickerProps> = ({
                 <Label htmlFor="external-url">Full URL</Label>
                 <Input
                   id="external-url"
-                  placeholder="https://example.com"
+                  placeholder="https://kennedynespot.com or https://external-site.com"
                   value={externalUrl}
                   onChange={(e) => setExternalUrl(e.target.value)}
                   autoFocus
                 />
                 <p className="text-xs text-muted-foreground mt-1">
-                  Enter the complete URL starting with https:// or http://
+                  Enter a complete URL starting with https:// or http://
                 </p>
               </div>
 
