@@ -62,11 +62,14 @@ export async function runMigration(migrationKey: string): Promise<MigrationResul
     } catch (rpcError: any) {
       console.error('RPC Error Details:', rpcError);
 
+      // Extract error message safely
+      const errorMessage = extractErrorMessage(rpcError);
+
       // Check if it's specifically a function not found error
       const isUnknownFunction =
-        rpcError?.message?.includes('Unknown function') ||
-        rpcError?.code === '42883' ||
-        rpcError?.message?.includes('does not exist') ||
+        errorMessage?.includes('Unknown function') ||
+        errorMessage?.includes('does not exist') ||
+        errorMessage?.includes('42883') ||
         rpcError?.status === 404;
 
       if (isUnknownFunction) {
@@ -80,18 +83,47 @@ export async function runMigration(migrationKey: string): Promise<MigrationResul
       // For any other RPC error
       return {
         success: false,
-        message: '⚠️ Migration via RPC failed. Click "Copy SQL" to run it manually in Supabase SQL Editor.',
-        error: `${rpcError?.message || 'RPC execution failed'}`
+        message: '⚠️ RPC execution failed. Use the "Copy SQL" button to manually run it in Supabase SQL Editor instead.',
+        error: errorMessage || 'RPC execution failed'
       };
     }
   } catch (err: any) {
     console.error('Migration error:', err);
+    const errorMessage = extractErrorMessage(err);
     return {
       success: false,
       message: '⚠️ Migration failed. Use the "Copy SQL" button to run it manually in Supabase SQL Editor.',
-      error: err?.message || 'Unknown error occurred'
+      error: errorMessage || 'Unknown error occurred'
     };
   }
+}
+
+/**
+ * Helper function to safely extract error message from various error object structures
+ */
+function extractErrorMessage(error: any): string {
+  if (!error) return '';
+
+  // If it's a string, return it
+  if (typeof error === 'string') return error;
+
+  // Try common error object properties
+  if (error.message) return error.message;
+  if (error.error_description) return error.error_description;
+  if (error.msg) return error.msg;
+  if (error.hint) return error.hint;
+  if (error.details) return error.details;
+
+  // If it's a Supabase error object, check its structure
+  if (error.status && error.code) {
+    return `Error ${error.status}: ${error.code}`;
+  }
+
+  // Last resort: try to stringify and clean it up
+  const str = String(error);
+  if (str !== '[object Object]') return str;
+
+  return '';
 }
 
 /**
