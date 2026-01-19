@@ -135,7 +135,11 @@ export default function BlogEditor() {
     meta_robots: 'index,follow',
     twitter_card: 'summary_large_image',
     schema_type: 'Article',
-    author_id: ''
+    author_id: '',
+    cta_type: 'whatsapp',
+    cta_title: '',
+    cta_url: '',
+    cta_enabled: true
   });
 
   const [authors, setAuthors] = useState<Author[]>([]);
