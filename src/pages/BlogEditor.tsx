@@ -1264,7 +1264,7 @@ export default function BlogEditor() {
                                 post.cta_type === 'whatsapp' ? '+1234567890' :
                                 post.cta_type === 'email' ? 'hello@example.com' :
                                 post.cta_type === 'phone' ? '+1234567890' :
-                                'https://example.com'
+                                'https://kennedynespot.com/blog/your-post-slug'
                               }
                             />
                             {post.cta_type === 'link' && (
