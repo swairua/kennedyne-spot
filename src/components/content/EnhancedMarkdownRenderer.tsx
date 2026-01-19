@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import remarkSmartypants from 'remark-smartypants';
 import remarkToc from 'remark-toc';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
@@ -22,6 +21,39 @@ interface EnhancedMarkdownRendererProps {
   className?: string;
   components?: Record<string, React.ComponentType<any>>;
 }
+
+// Wrapper component to handle markdown rendering
+const MarkdownRendererWrapper: React.FC<{
+  content: string;
+  components: Record<string, React.ComponentType<any>>;
+}> = ({ content, components }) => {
+  return (
+    <ReactMarkdown
+      remarkPlugins={[
+        remarkGfm,
+        [remarkToc, { maxDepth: 3, tight: true }]
+      ]}
+      rehypePlugins={[
+        rehypeRaw,
+        rehypeSlug,
+        [rehypeAutolinkHeadings, {
+          behavior: 'wrap',
+          properties: {
+            className: 'anchor-link'
+          }
+        }],
+        [rehypeExternalLinks, {
+          target: '_blank',
+          rel: 'noopener noreferrer'
+        }]
+      ]}
+      components={components}
+      unwrapDisallowed={true}
+    >
+      {content}
+    </ReactMarkdown>
+  );
+};
 
 export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> = ({
   content,
@@ -242,7 +274,7 @@ export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> =
   return (
     <div className="relative">
       {showProgress && <ReadingProgressBar />}
-      
+
       <div className={cn("flex gap-8", className)}>
         {/* Main content */}
         <article className="flex-1 min-w-0">
@@ -258,31 +290,10 @@ export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> =
             "prose-th:border prose-th:border-border prose-th:bg-muted prose-th:px-4 prose-th:py-2",
             "prose-td:border prose-td:border-border prose-td:px-4 prose-td:py-2"
           )}>
-            <ReactMarkdown
-              remarkPlugins={[
-                remarkGfm,
-                remarkSmartypants,
-                [remarkToc, { maxDepth: 3, tight: true }]
-              ]}
-              rehypePlugins={[
-                rehypeRaw,
-                rehypeSlug,
-                [rehypeAutolinkHeadings, {
-                  behavior: 'wrap',
-                  properties: {
-                    className: 'anchor-link'
-                  }
-                }],
-                [rehypeExternalLinks, {
-                  target: '_blank',
-                  rel: 'noopener noreferrer'
-                }]
-              ]}
+            <MarkdownRendererWrapper
+              content={content}
               components={components}
-              unwrapDisallowed={true}
-            >
-              {content}
-            </ReactMarkdown>
+            />
           </div>
         </article>
 
