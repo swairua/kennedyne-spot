@@ -23,70 +23,38 @@ interface EnhancedMarkdownRendererProps {
   components?: Record<string, React.ComponentType<any>>;
 }
 
-// Error boundary for markdown rendering
-class MarkdownErrorBoundary extends React.Component<
-  {
-    children: React.ReactNode;
-    onError: (error: Error) => void;
-  },
-  { hasError: boolean }
-> {
-  constructor(props: { children: React.ReactNode; onError: (error: Error) => void }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error: Error) {
-    return { hasError: true };
-  }
-
-  componentDidCatch(error: Error) {
-    this.props.onError(error);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return null;
-    }
-    return this.props.children;
-  }
-}
-
-// Wrapper component to handle markdown rendering with error handling
+// Wrapper component to handle markdown rendering
 const MarkdownRendererWrapper: React.FC<{
   content: string;
   components: Record<string, React.ComponentType<any>>;
   disableSmartypants: boolean;
-  onError: (error: Error) => void;
-}> = ({ content, components, disableSmartypants, onError }) => {
+}> = ({ content, components, disableSmartypants }) => {
   return (
-    <MarkdownErrorBoundary onError={onError}>
-      <ReactMarkdown
-        remarkPlugins={[
-          remarkGfm,
-          !disableSmartypants && remarkSmartypants,
-          [remarkToc, { maxDepth: 3, tight: true }]
-        ].filter(Boolean)}
-        rehypePlugins={[
-          rehypeRaw,
-          rehypeSlug,
-          [rehypeAutolinkHeadings, {
-            behavior: 'wrap',
-            properties: {
-              className: 'anchor-link'
-            }
-          }],
-          [rehypeExternalLinks, {
-            target: '_blank',
-            rel: 'noopener noreferrer'
-          }]
-        ]}
-        components={components}
-        unwrapDisallowed={true}
-      >
-        {content}
-      </ReactMarkdown>
-    </MarkdownErrorBoundary>
+    <ReactMarkdown
+      remarkPlugins={[
+        remarkGfm,
+        !disableSmartypants && remarkSmartypants,
+        [remarkToc, { maxDepth: 3, tight: true }]
+      ].filter(Boolean)}
+      rehypePlugins={[
+        rehypeRaw,
+        rehypeSlug,
+        [rehypeAutolinkHeadings, {
+          behavior: 'wrap',
+          properties: {
+            className: 'anchor-link'
+          }
+        }],
+        [rehypeExternalLinks, {
+          target: '_blank',
+          rel: 'noopener noreferrer'
+        }]
+      ]}
+      components={components}
+      unwrapDisallowed={true}
+    >
+      {content}
+    </ReactMarkdown>
   );
 };
 
