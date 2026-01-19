@@ -60,6 +60,13 @@ export default function AdminDashboard() {
       icon: Users,
       href: '/admin/users-roles',
       available: true
+    },
+    {
+      title: 'Database Migrations',
+      description: 'Manage and apply database schema migrations',
+      icon: GitBranch,
+      href: '/admin/migrations',
+      available: true
     }
   ];
 
