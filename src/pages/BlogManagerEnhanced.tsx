@@ -945,6 +945,90 @@ Understanding these concepts is crucial for trading success. Continue your educa
         </DialogContent>
       </Dialog>
 
+      {/* Migration Modal */}
+      <Dialog open={showMigrationModal} onOpenChange={setShowMigrationModal}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Database Migrations</DialogTitle>
+            <DialogDescription>
+              Run database schema migrations to add new features
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-6">
+            <Card className="border-blue-200 bg-blue-50 dark:bg-blue-900/20">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <div className="text-sm text-blue-900 dark:text-blue-200">
+                    <p className="font-medium mb-1">Add CTA Fields to Blog Posts</p>
+                    <p>This migration adds custom call-to-action (CTA) button support to blog posts. You'll be able to configure unique CTAs for each blog post.</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {migrationResult && (
+              <Card className={migrationResult.success ? "border-green-200 bg-green-50 dark:bg-green-900/20" : "border-red-200 bg-red-50 dark:bg-red-900/20"}>
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-3">
+                    {migrationResult.success ? (
+                      <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    ) : (
+                      <AlertTriangle className="h-5 w-5 text-red-600 mt-0.5 flex-shrink-0" />
+                    )}
+                    <div className={`text-sm ${migrationResult.success ? 'text-green-900 dark:text-green-200' : 'text-red-900 dark:text-red-200'}`}>
+                      <p className="font-medium">{migrationResult.success ? 'Success' : 'Failed'}</p>
+                      <p className="mt-1">{migrationResult.message}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            <div className="space-y-3">
+              <h4 className="font-medium text-sm">Options:</h4>
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleRunMigration}
+                  disabled={migrationRunning}
+                  className="flex-1"
+                >
+                  {migrationRunning ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Running Migration...
+                    </>
+                  ) : (
+                    <>
+                      <Database className="h-4 w-4 mr-2" />
+                      Run Migration
+                    </>
+                  )}
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={handleCopySql}
+                  className="flex-1"
+                >
+                  <Copy className="h-4 w-4 mr-2" />
+                  Copy SQL
+                </Button>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                "Run Migration" uses Supabase RPC (may not be available). "Copy SQL" lets you paste into Supabase SQL Editor.
+              </p>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowMigrationModal(false)}>
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Delete Confirmation Modal */}
       <AlertDialog open={postToDelete !== null} onOpenChange={(open) => !open && setPostToDelete(null)}>
         <AlertDialogContent>
