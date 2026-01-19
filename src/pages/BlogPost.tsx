@@ -5,10 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { 
-  Calendar, Clock, User, Tag, Share2, Copy, 
+import {
+  Calendar, Clock, User, Tag, Share2, Copy,
   ArrowLeft, Eye, Twitter, Facebook, Linkedin,
-  MessageCircle
+  MessageCircle, Mail, Phone, ExternalLink
 } from 'lucide-react';
 import { SEOHead } from '@/components/SEOHead';
 import { SectionDivider } from '@/components/SectionDivider';
@@ -47,6 +47,10 @@ interface BlogPost {
   og_image_url?: string;
   schema_type: string;
   schema_json_ld?: any;
+  cta_type?: string;
+  cta_title?: string;
+  cta_url?: string;
+  cta_enabled?: boolean;
   authors?: { name: string; slug: string; bio?: string; avatar_url?: string }[];
   categories?: { name: string; slug: string }[];
   tags?: { name: string; slug: string }[];
@@ -639,28 +643,95 @@ export default function BlogPost() {
                 </div>
               )}
 
-              {/* WhatsApp CTA */}
-              {siteSettings.whatsapp_number && (
-                <Card className="mt-8 bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-800">
+              {/* Custom CTA or WhatsApp CTA */}
+              {post.cta_enabled !== false && (post.cta_enabled || siteSettings.whatsapp_number) && (
+                <Card className={`mt-8 ${
+                  post.cta_type === 'whatsapp' || !post.cta_enabled
+                    ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-800'
+                    : post.cta_type === 'email'
+                    ? 'bg-blue-50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800'
+                    : post.cta_type === 'phone'
+                    ? 'bg-amber-50 dark:bg-amber-900/10 border-amber-200 dark:border-amber-800'
+                    : 'bg-purple-50 dark:bg-purple-900/10 border-purple-200 dark:border-purple-800'
+                }`}>
                   <CardContent className="pt-6">
                     <div className="text-center">
-                      <h3 className="text-xl font-semibold mb-2">{t('ready_to_start_trading')}</h3>
-                      <p className="text-muted-foreground mb-4">{t('ready_to_start_trading_desc')}</p>
-                      <Button 
-                        className="bg-green-600 hover:bg-green-700 text-white"
-                        onClick={() => {
-                          const whatsappUrl = createWhatsAppLink(siteSettings.whatsapp_number, whatsappCTAMessage);
-                          window.open(whatsappUrl, '_blank');
-                          trackEvent('cta_click', { 
-                            type: 'whatsapp',
-                            location: 'post_bottom',
-                            post_slug: post.slug 
-                          });
-                        }}
-                      >
-                        <MessageCircle className="h-4 w-4 mr-2" />
-                        {t('contact_on_whatsapp')}
-                      </Button>
+                      {/* Custom CTA */}
+                      {post.cta_enabled && post.cta_title && post.cta_url ? (
+                        <>
+                          <h3 className="text-xl font-semibold mb-2">{post.cta_title}</h3>
+                          <Button
+                            className={`${
+                              post.cta_type === 'email'
+                                ? 'bg-blue-600 hover:bg-blue-700'
+                                : post.cta_type === 'phone'
+                                ? 'bg-amber-600 hover:bg-amber-700'
+                                : post.cta_type === 'whatsapp'
+                                ? 'bg-green-600 hover:bg-green-700'
+                                : 'bg-purple-600 hover:bg-purple-700'
+                            } text-white`}
+                            onClick={() => {
+                              let url = '';
+                              switch (post.cta_type) {
+                                case 'whatsapp':
+                                  url = createWhatsAppLink(post.cta_url, whatsappCTAMessage);
+                                  break;
+                                case 'email':
+                                  url = `mailto:${post.cta_url}`;
+                                  break;
+                                case 'phone':
+                                  url = `tel:${post.cta_url}`;
+                                  break;
+                                case 'link':
+                                default:
+                                  url = post.cta_url;
+                                  break;
+                              }
+
+                              if (url) {
+                                if (post.cta_type === 'link') {
+                                  window.location.href = url;
+                                } else {
+                                  window.open(url, '_blank');
+                                }
+                              }
+
+                              trackEvent('cta_click', {
+                                type: post.cta_type,
+                                location: 'post_bottom',
+                                post_slug: post.slug
+                              });
+                            }}
+                          >
+                            {post.cta_type === 'email' && <Mail className="h-4 w-4 mr-2" />}
+                            {post.cta_type === 'phone' && <Phone className="h-4 w-4 mr-2" />}
+                            {post.cta_type === 'whatsapp' && <MessageCircle className="h-4 w-4 mr-2" />}
+                            {post.cta_type === 'link' && <ExternalLink className="h-4 w-4 mr-2" />}
+                            {post.cta_title}
+                          </Button>
+                        </>
+                      ) : siteSettings.whatsapp_number ? (
+                        /* Fallback to Default WhatsApp CTA */
+                        <>
+                          <h3 className="text-xl font-semibold mb-2">{t('ready_to_start_trading')}</h3>
+                          <p className="text-muted-foreground mb-4">{t('ready_to_start_trading_desc')}</p>
+                          <Button
+                            className="bg-green-600 hover:bg-green-700 text-white"
+                            onClick={() => {
+                              const whatsappUrl = createWhatsAppLink(siteSettings.whatsapp_number, whatsappCTAMessage);
+                              window.open(whatsappUrl, '_blank');
+                              trackEvent('cta_click', {
+                                type: 'whatsapp',
+                                location: 'post_bottom',
+                                post_slug: post.slug
+                              });
+                            }}
+                          >
+                            <MessageCircle className="h-4 w-4 mr-2" />
+                            {t('contact_on_whatsapp')}
+                          </Button>
+                        </>
+                      ) : null}
                     </div>
                   </CardContent>
                 </Card>

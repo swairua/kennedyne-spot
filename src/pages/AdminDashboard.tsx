@@ -3,14 +3,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { 
-  Settings, 
-  Users, 
-  BookOpen, 
-  HelpCircle, 
+import {
+  Settings,
+  Users,
+  BookOpen,
+  HelpCircle,
   PenTool,
   Database,
-  Shield
+  Shield,
+  GitBranch
 } from 'lucide-react';
 import { useUserRoles } from '@/hooks/useUserRoles';
 import { supabase } from '@/integrations/supabase/client';
@@ -58,6 +59,13 @@ export default function AdminDashboard() {
       description: 'Manage user permissions and roles',
       icon: Users,
       href: '/admin/users-roles',
+      available: true
+    },
+    {
+      title: 'Database Migrations',
+      description: 'Manage and apply database schema migrations',
+      icon: GitBranch,
+      href: '/admin/migrations',
       available: true
     }
   ];

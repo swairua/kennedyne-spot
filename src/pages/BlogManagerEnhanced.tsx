@@ -10,18 +10,24 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { 
-  Eye, 
-  Edit, 
-  Trash2, 
-  Star, 
-  Plus, 
-  Users, 
+import { runMigration, getMigrationSQL } from "@/utils/runMigration";
+import {
+  Eye,
+  Edit,
+  Trash2,
+  Star,
+  Plus,
+  Users,
   Search,
   ArrowUpDown,
   ExternalLink,
   PowerOff,
-  Power
+  Power,
+  Database,
+  Copy,
+  Loader2,
+  Check,
+  AlertTriangle
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
@@ -98,6 +104,9 @@ export default function BlogManagerEnhanced() {
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
   const [showImportModal, setShowImportModal] = useState(false);
+  const [showMigrationModal, setShowMigrationModal] = useState(false);
+  const [migrationRunning, setMigrationRunning] = useState(false);
+  const [migrationResult, setMigrationResult] = useState<{success: boolean; message: string} | null>(null);
   const [selectedPosts, setSelectedPosts] = useState<string[]>([]);
   const [postToDelete, setPostToDelete] = useState<BlogPost | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -263,6 +272,64 @@ export default function BlogManagerEnhanced() {
         description: 'Failed to update post status',
         variant: 'destructive',
       });
+    }
+  };
+
+  // Run database migration
+  const handleRunMigration = async () => {
+    setMigrationRunning(true);
+    setMigrationResult(null);
+
+    try {
+      const result = await runMigration('001_add_blog_cta_fields');
+      setMigrationResult(result);
+
+      if (result.success) {
+        toast({
+          title: 'Success',
+          description: result.message,
+        });
+      } else {
+        toast({
+          title: 'Migration Not Available',
+          description: result.message || 'Please run the migration manually via Supabase SQL Editor',
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      console.error('Migration error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      setMigrationResult({
+        success: false,
+        message: `Error: ${errorMessage}`
+      });
+      toast({
+        title: 'Error',
+        description: 'Failed to run migration',
+        variant: 'destructive',
+      });
+    } finally {
+      setMigrationRunning(false);
+    }
+  };
+
+  // Copy SQL to clipboard
+  const handleCopySql = async () => {
+    const sql = getMigrationSQL('001_add_blog_cta_fields');
+    if (sql) {
+      try {
+        await navigator.clipboard.writeText(sql);
+        toast({
+          title: 'Copied',
+          description: 'SQL copied to clipboard',
+        });
+      } catch (error) {
+        toast({
+          title: 'Error',
+          description: 'Failed to copy SQL',
+          variant: 'destructive',
+        });
+      }
     }
   };
 
@@ -506,7 +573,23 @@ Understanding these concepts is crucial for trading success. Continue your educa
           </p>
         </div>
         <div className="flex gap-2">
-          <Button 
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="outline"
+                onClick={() => setShowMigrationModal(true)}
+                size="sm"
+                className="text-xs"
+              >
+                <Database className="h-4 w-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>
+              Run database migrations
+            </TooltipContent>
+          </Tooltip>
+
+          <Button
             variant="outline"
             onClick={() => setShowImportModal(true)}
             className="mr-2"
@@ -857,6 +940,120 @@ Understanding these concepts is crucial for trading success. Continue your educa
             </Button>
             <Button onClick={handleImportLegacyPosts} disabled={selectedPosts.length === 0}>
               Import {selectedPosts.length} Selected Posts
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Migration Modal */}
+      <Dialog open={showMigrationModal} onOpenChange={setShowMigrationModal}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Database Migrations</DialogTitle>
+            <DialogDescription>
+              Run database schema migrations to add new features
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-6">
+            <Card className="border-blue-200 bg-blue-50 dark:bg-blue-900/20">
+              <CardContent className="pt-6">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                  <div className="text-sm text-blue-900 dark:text-blue-200">
+                    <p className="font-medium mb-1">✨ Add CTA Fields to Blog Posts</p>
+                    <p>This migration adds custom call-to-action (CTA) button support to blog posts. You'll be able to configure unique CTAs for each blog post.</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {migrationResult && (
+              <Card className={migrationResult.success ? "border-green-200 bg-green-50 dark:bg-green-900/20" : "border-amber-200 bg-amber-50 dark:bg-amber-900/20"}>
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-3">
+                    {migrationResult.success ? (
+                      <Check className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    ) : (
+                      <AlertTriangle className="h-5 w-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                    )}
+                    <div className={`text-sm ${migrationResult.success ? 'text-green-900 dark:text-green-200' : 'text-amber-900 dark:text-amber-200'}`}>
+                      <p className="font-medium">{migrationResult.success ? '✓ Success' : 'ℹ️ Manual Method Required'}</p>
+                      <p className="mt-1">{migrationResult.message}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            <div className="space-y-4">
+              <div>
+                <h4 className="font-medium text-sm mb-3">How to Run:</h4>
+                <p className="text-xs text-muted-foreground mb-3">
+                  Choose your preferred method:
+                </p>
+              </div>
+
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleRunMigration}
+                  disabled={migrationRunning}
+                  className="flex-1 bg-primary hover:bg-primary/90"
+                  size="sm"
+                >
+                  {migrationRunning ? (
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Running...
+                    </>
+                  ) : (
+                    <>
+                      <Database className="h-4 w-4 mr-2" />
+                      Auto (Recommended)
+                    </>
+                  )}
+                </Button>
+                <Button
+                  onClick={handleCopySql}
+                  variant="outline"
+                  className="flex-1"
+                  size="sm"
+                >
+                  <Copy className="h-4 w-4 mr-2" />
+                  Manual SQL
+                </Button>
+              </div>
+
+              <div className="bg-muted p-3 rounded-lg text-xs space-y-3">
+                <div>
+                  <p className="font-medium mb-1">🤖 Auto Method (Recommended):</p>
+                  <p className="text-muted-foreground">
+                    Requires: Deploy the Edge Function once
+                  </p>
+                  <pre className="bg-background p-2 rounded mt-1 text-[10px] overflow-x-auto"><code>supabase functions deploy</code></pre>
+                  <p className="text-muted-foreground text-[10px] mt-1">
+                    After deployment, click "Auto (Recommended)" to run migrations instantly.
+                  </p>
+                </div>
+
+                <div className="border-t pt-2">
+                  <p className="font-medium mb-1">📝 Manual Method:</p>
+                  <ol className="list-decimal list-inside space-y-1 text-muted-foreground">
+                    <li>Click "Manual SQL"</li>
+                    <li>Go to <a href="https://app.supabase.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Supabase Dashboard</a></li>
+                    <li>Navigate to <strong>SQL Editor</strong></li>
+                    <li>Create <strong>New Query</strong></li>
+                    <li>Paste the SQL</li>
+                    <li>Click <strong>Run</strong></li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowMigrationModal(false)}>
+              Close
             </Button>
           </DialogFooter>
         </DialogContent>
