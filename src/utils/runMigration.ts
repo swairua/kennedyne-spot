@@ -30,12 +30,12 @@ export interface MigrationResult {
 
 /**
  * Run a migration using Supabase RPC function
- * Falls back to direct SQL execution if RPC fails
+ * Falls back to manual instructions if RPC fails
  */
 export async function runMigration(migrationKey: string): Promise<MigrationResult> {
   try {
     const sql = MIGRATIONS[migrationKey];
-    
+
     if (!sql) {
       return {
         success: false,
@@ -46,11 +46,12 @@ export async function runMigration(migrationKey: string): Promise<MigrationResul
 
     // Try using the exec function (if it exists)
     try {
-      const { error } = await supabase.rpc('exec', {
+      const { error, data } = await supabase.rpc('exec', {
         sql_query: sql
       });
 
       if (error) {
+        console.error('RPC Error:', error);
         throw error;
       }
 
@@ -59,21 +60,35 @@ export async function runMigration(migrationKey: string): Promise<MigrationResul
         message: 'Migration executed successfully! CTA fields have been added to blog posts.'
       };
     } catch (rpcError: any) {
-      // If RPC doesn't exist, provide instructions for manual execution
-      if (rpcError?.message?.includes('Unknown function') || rpcError?.code === '42883') {
+      console.error('RPC Error Details:', rpcError);
+
+      // Check if it's specifically a function not found error
+      const isUnknownFunction =
+        rpcError?.message?.includes('Unknown function') ||
+        rpcError?.code === '42883' ||
+        rpcError?.message?.includes('does not exist') ||
+        rpcError?.status === 404;
+
+      if (isUnknownFunction) {
         return {
           success: false,
-          message: 'Automatic migration not available. Please copy the SQL and run it manually.',
-          error: 'RPC function not available. Use Supabase SQL Editor instead.'
+          message: 'ℹ️ RPC function not available. Use the "Copy SQL" button to manually run it in Supabase SQL Editor.',
+          error: 'RPC not configured'
         };
       }
-      throw rpcError;
+
+      // For any other RPC error
+      return {
+        success: false,
+        message: '⚠️ Migration via RPC failed. Click "Copy SQL" to run it manually in Supabase SQL Editor.',
+        error: `${rpcError?.message || 'RPC execution failed'}`
+      };
     }
   } catch (err: any) {
     console.error('Migration error:', err);
     return {
       success: false,
-      message: 'Failed to run migration',
+      message: '⚠️ Migration failed. Use the "Copy SQL" button to run it manually in Supabase SQL Editor.',
       error: err?.message || 'Unknown error occurred'
     };
   }
