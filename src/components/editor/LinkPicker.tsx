@@ -51,7 +51,14 @@ export const LinkPicker: React.FC<LinkPickerProps> = ({
   const [selectedTab, setSelectedTab] = useState<'blog' | 'internal' | 'external'>('blog');
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [externalUrl, setExternalUrl] = useState(currentUrl && !currentUrl.startsWith('/') ? currentUrl : '');
+  const [externalUrl, setExternalUrl] = useState(() => {
+    if (!currentUrl) return '';
+    // If it's a full URL that doesn't start with our production domain, it's external
+    if (currentUrl.startsWith('http') && !currentUrl.startsWith(PRODUCTION_BASE_URL)) {
+      return currentUrl;
+    }
+    return '';
+  });
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
