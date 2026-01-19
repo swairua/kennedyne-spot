@@ -23,6 +23,47 @@ interface EnhancedMarkdownRendererProps {
   components?: Record<string, React.ComponentType<any>>;
 }
 
+// Wrapper component to handle markdown rendering with error handling
+const MarkdownRendererWrapper: React.FC<{
+  content: string;
+  components: Record<string, React.ComponentType<any>>;
+  disableSmartypants: boolean;
+  onError: (error: Error) => void;
+}> = ({ content, components, disableSmartypants, onError }) => {
+  try {
+    return (
+      <ReactMarkdown
+        remarkPlugins={[
+          remarkGfm,
+          !disableSmartypants && remarkSmartypants,
+          [remarkToc, { maxDepth: 3, tight: true }]
+        ].filter(Boolean)}
+        rehypePlugins={[
+          rehypeRaw,
+          rehypeSlug,
+          [rehypeAutolinkHeadings, {
+            behavior: 'wrap',
+            properties: {
+              className: 'anchor-link'
+            }
+          }],
+          [rehypeExternalLinks, {
+            target: '_blank',
+            rel: 'noopener noreferrer'
+          }]
+        ]}
+        components={components}
+        unwrapDisallowed={true}
+      >
+        {content}
+      </ReactMarkdown>
+    );
+  } catch (error) {
+    onError(error instanceof Error ? error : new Error(String(error)));
+    return null;
+  }
+};
+
 export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> = ({
   content,
   showTOC = true,
