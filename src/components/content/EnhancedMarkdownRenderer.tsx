@@ -239,10 +239,13 @@ export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> =
     ...customComponents
   };
 
+  // State to track if smartypants should be disabled due to browser incompatibility
+  const [disableSmartypants, setDisableSmartypants] = React.useState(false);
+
   return (
     <div className="relative">
       {showProgress && <ReadingProgressBar />}
-      
+
       <div className={cn("flex gap-8", className)}>
         {/* Main content */}
         <article className="flex-1 min-w-0">
@@ -261,9 +264,9 @@ export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> =
             <ReactMarkdown
               remarkPlugins={[
                 remarkGfm,
-                remarkSmartypants,
+                !disableSmartypants && remarkSmartypants,
                 [remarkToc, { maxDepth: 3, tight: true }]
-              ]}
+              ].filter(Boolean)}
               rehypePlugins={[
                 rehypeRaw,
                 rehypeSlug,
