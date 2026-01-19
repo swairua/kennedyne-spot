@@ -27,6 +27,7 @@ import MarkdownGuide from '@/components/content/MarkdownGuide';
 import { ImageInput } from '@/components/ui/image-input';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { RichTextEditor } from '@/components/editor/RichTextEditor';
+import { LinkPicker } from '@/components/editor/LinkPicker';
 
 const NAIROBI_TZ = 'Africa/Nairobi';
 
@@ -161,6 +162,7 @@ export default function BlogEditor() {
   const [showCancelDialog, setShowCancelDialog] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [translating, setTranslating] = useState(false);
+  const [showLinkPicker, setShowLinkPicker] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Function to insert text at cursor position
@@ -1253,17 +1255,28 @@ export default function BlogEditor() {
                           <Label htmlFor="cta_url">
                             {post.cta_type === 'whatsapp' ? 'WhatsApp Number' : post.cta_type === 'email' ? 'Email Address' : post.cta_type === 'phone' ? 'Phone Number' : 'URL'}
                           </Label>
-                          <Input
-                            id="cta_url"
-                            value={post.cta_url || ''}
-                            onChange={(e) => setPost(prev => ({ ...prev, cta_url: e.target.value }))}
-                            placeholder={
-                              post.cta_type === 'whatsapp' ? '+1234567890' :
-                              post.cta_type === 'email' ? 'hello@example.com' :
-                              post.cta_type === 'phone' ? '+1234567890' :
-                              'https://example.com'
-                            }
-                          />
+                          <div className="flex gap-2">
+                            <Input
+                              id="cta_url"
+                              value={post.cta_url || ''}
+                              onChange={(e) => setPost(prev => ({ ...prev, cta_url: e.target.value }))}
+                              placeholder={
+                                post.cta_type === 'whatsapp' ? '+1234567890' :
+                                post.cta_type === 'email' ? 'hello@example.com' :
+                                post.cta_type === 'phone' ? '+1234567890' :
+                                'https://example.com'
+                              }
+                            />
+                            {post.cta_type === 'link' && (
+                              <Button
+                                type="button"
+                                variant="outline"
+                                onClick={() => setShowLinkPicker(true)}
+                              >
+                                Pick Link
+                              </Button>
+                            )}
+                          </div>
                           <p className="text-xs text-muted-foreground mt-1">
                             {post.cta_type === 'whatsapp' ? 'WhatsApp number with country code' :
                              post.cta_type === 'email' ? 'Email address' :
