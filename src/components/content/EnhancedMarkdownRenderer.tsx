@@ -294,7 +294,6 @@ export const EnhancedMarkdownRenderer: React.FC<EnhancedMarkdownRendererProps> =
             <MarkdownRendererWrapper
               content={content}
               components={components}
-              disableSmartypants={disableSmartypants}
             />
           </div>
         </article>
