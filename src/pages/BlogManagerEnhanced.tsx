@@ -573,22 +573,13 @@ Understanding these concepts is crucial for trading success. Continue your educa
           </p>
         </div>
         <div className="flex gap-2">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="outline"
-                onClick={() => setShowMigrationModal(true)}
-                size="sm"
-                className="text-xs"
-              >
-                <Database className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              Run database migrations
-            </TooltipContent>
-          </Tooltip>
-
+          <Button
+            variant="outline"
+            onClick={() => setShowImportModal(true)}
+            className="mr-2"
+          >
+            Import Legacy Posts
+          </Button>
           <Button asChild>
             <Link to="/admin/blog/new">
               <Plus className="h-4 w-4 mr-2" />
