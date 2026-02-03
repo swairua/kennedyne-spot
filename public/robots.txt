@@ -1,0 +1,75 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and authentication areas
+Disallow: /admin
+Disallow: /auth
+Disallow: /_health
+Disallow: /debug/
+
+# Block problematic duplicate content parameters
+# These cause soft 404s and waste crawl budget
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+Disallow: /*?*redirect=
+# Note: Removed "Disallow: /?*" - was too aggressive and blocked homepage
+# Note: Allow pagination with ?page= parameter for legitimate content discovery
+# Note: Allow other common query params like ?utm_*, ?gclid=, ?ref= for analytics
+
+# Allow static assets and resources
+Allow: *.css$
+Allow: *.js$
+Allow: *.jpg$
+Allow: *.jpeg$
+Allow: *.png$
+Allow: *.gif$
+Allow: *.svg$
+Allow: *.webp$
+Allow: *.woff$
+Allow: *.woff2$
+Allow: /sitemap.xml$
+
+# Specific crawler rules
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /auth
+Disallow: /_health
+Disallow: /debug/
+# Removed overly aggressive "Disallow: /*?*"
+# Now more specific about which query params to block
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+Disallow: /*?*redirect=
+Crawl-delay: 0.5
+
+User-agent: Googlebot-Image
+Allow: /
+Disallow: /admin
+Disallow: /auth
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /auth
+Disallow: /_health
+Disallow: /*?*sort=
+Disallow: /*?*filter=
+Disallow: /*?*redirect=
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: DotBot
+User-agent: MJ12bot
+Disallow: /
+
+# Crawl delay for respectful crawling
+Crawl-delay: 1
+Request-rate: 30/60
+
+# Sitemap locations
+Sitemap: https://kennedynespot.com/sitemap-index.xml
+Sitemap: https://kennedynespot.com/sitemap.xml
+Sitemap: https://kennedynespot.com/sitemap-blog.xml

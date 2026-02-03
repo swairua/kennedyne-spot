@@ -1,0 +1,28 @@
+project_id = "dbtyzloscmhaskjlbyvl"
+
+[functions.admin_invite_user]
+verify_jwt = true
+
+[functions.admin_create_user]
+verify_jwt = true
+
+[functions.submit-mentorship-application]
+verify_jwt = false
+
+[functions.submit-contact-form]
+verify_jwt = false
+
+[functions.submit-newsletter-subscription]
+verify_jwt = false
+
+[functions.submit-session-registration]
+verify_jwt = false
+
+[functions.submit-checklist-request]
+verify_jwt = false
+
+[functions.sign-resource-url]
+verify_jwt = false
+
+[functions.check-resource-availability]
+verify_jwt = false

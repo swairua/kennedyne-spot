@@ -1,0 +1,1025 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* Modern Professional Design System
+All colors MUST be HSL for maximum design flexibility
+*/
+
+@layer base {
+  :root {
+    /* Fintech Professional Color Palette */
+    --background: 210 25% 98%;
+    --foreground: 224 71% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 4%;
+    --primary: 271 81% 56%;  /* Royal Purple */
+    --primary-foreground: 210 40% 98%;
+    --primary-hover: 271 81% 47%;
+    --secondary: 158 64% 52%;  /* Emerald Green */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 8% 46%;
+    --accent: 45 93% 58%;  /* Gold Accent */
+    --accent-foreground: 26 83% 14%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 221 83% 53%;
+    
+    /* Risk Warning Color */
+    --warning: 25 95% 53%;
+    --warning-foreground: 26 83% 14%;
+    
+    /* Enhanced Overlays - Neutral grayscale for hero sections */
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)/0.95) 0%, hsl(var(--background)/0.85) 25%, hsl(var(--background)/0.75) 50%, hsl(var(--background)/0.85) 75%, hsl(var(--background)/0.95) 100%);
+    --gradient-hero: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.35) 100%);
+    --gradient-hero-premium: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.35) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(271, 70%, 48%) 0%, hsl(275, 75%, 52%) 50%, hsl(280, 80%, 56%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(210, 40%, 98%) 0%, hsl(214, 32%, 91%) 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.90) 0%, rgba(255, 255, 255, 0.70) 100%);
+    
+    /* Refined Shadow System - Light Mode */
+    --shadow-professional: 0 20px 40px -12px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.02);
+    --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.02);
+    --shadow-elevation: 0 24px 48px -12px rgba(138, 43, 226, 0.08);
+    --shadow-glass: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 4px 24px rgba(0, 0, 0, 0.04);
+    --shadow-button: 0 6px 16px rgba(138, 43, 226, 0.12);
+    
+    /* Glass Morphism - Light Mode */
+    --glass-bg: rgba(255, 255, 255, 0.80);
+    --glass-border: rgba(255, 255, 255, 0.9);
+    --glass-blur: blur(16px);
+    
+    /* Typography Scale */
+    --font-display: 'Roboto', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    
+    /* Spacing & Layout */
+    --radius: 0.875rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
+    
+    /* Sidebar */
+    --sidebar-background: 240 5% 96%;
+    --sidebar-foreground: 240 8% 5%;
+    --sidebar-primary: 240 8% 5%;
+    --sidebar-primary-foreground: 240 5% 96%;
+    --sidebar-accent: 240 4% 89%;
+    --sidebar-accent-foreground: 240 8% 5%;
+    --sidebar-border: 240 4% 82%;
+    --sidebar-ring: 240 8% 5%;
+  }
+
+  .dark {
+    /* Fintech Dark Mode */
+    --background: 224 71% 4%;
+    --foreground: 210 40% 98%;
+    --card: 224 71% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 224 71% 8%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 271 81% 56%;  /* Royal Purple */
+    --primary-foreground: 210 40% 98%;
+    --primary-hover: 271 81% 47%;
+    --secondary: 158 64% 52%;  /* Emerald Green */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 215 27% 17%;
+    --muted-foreground: 217 10% 65%;
+    --accent: 45 93% 58%;  /* Gold Accent */
+    --accent-foreground: 26 83% 14%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 215 27% 17%;
+    --input: 215 27% 17%;
+    --ring: 221 83% 53%;
+    
+    /* Risk Warning Color */
+    --warning: 25 95% 53%;
+    --warning-foreground: 26 83% 14%;
+    
+    /* Dark Mode Enhanced Overlays - Neutral grayscale */
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)/0.95) 0%, hsl(var(--background)/0.85) 25%, hsl(var(--background)/0.75) 50%, hsl(var(--background)/0.85) 75%, hsl(var(--background)/0.95) 100%);
+    --gradient-hero: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.25) 100%);
+    --gradient-hero-premium: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0.25) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(271, 70%, 48%) 0%, hsl(275, 75%, 52%) 50%, hsl(280, 80%, 56%) 100%);
+    --gradient-secondary: linear-gradient(135deg, hsl(240, 3%, 20%) 0%, hsl(240, 5%, 24%) 100%);
+    --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+    
+    /* Dark Mode Shadows - Refined */
+    --shadow-professional: 0 20px 40px -12px rgba(0, 0, 0, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    --shadow-elevation: 0 24px 48px -12px rgba(138, 43, 226, 0.12);
+    --shadow-glass: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 4px 24px rgba(0, 0, 0, 0.12);
+    --shadow-button: 0 6px 16px rgba(138, 43, 226, 0.16);
+    
+    /* Sidebar Dark */
+    --sidebar-background: 240 8% 5%;
+    --sidebar-foreground: 240 5% 96%;
+    --sidebar-primary: 240 5% 96%;
+    --sidebar-primary-foreground: 240 8% 5%;
+    --sidebar-accent: 240 4% 16%;
+    --sidebar-accent-foreground: 240 5% 96%;
+    --sidebar-border: 240 4% 18%;
+    --sidebar-ring: 240 5% 84%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased text-base;
+    font-size: 16px; /* Ensure base font size is 16px for better readability */
+    line-height: 1.6; /* Improved line height for better readability */
+    scroll-behavior: smooth; /* Smooth scrolling for better UX */
+  }
+
+  /* Enhanced accessibility and performance */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Focus management for keyboard navigation */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    @apply ring-2 ring-primary ring-offset-2 ring-offset-background outline-none;
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Custom Utility Classes removed - defined below with performance optimizations */
+
+  .text-display {
+    @apply font-display;
+  }
+
+  /* Utility Classes for Premium Design */
+  .bg-gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .bg-gradient-hero-premium {
+    background: var(--gradient-hero-premium);
+  }
+
+  .text-primary-glow {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 20px rgba(138,43,226,0.25);
+  }
+
+  .bg-gradient-subtle {
+    background: var(--gradient-subtle);
+  }
+
+  .bg-gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  .bg-gradient-professional {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-hover)) 100%);
+  }
+
+  .near-footer-contrast {
+    background: var(--gradient-secondary);
+    border-top: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  .grain-texture {
+    position: relative;
+  }
+
+  .grain-texture::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.15) 1px, transparent 0);
+    background-size: 20px 20px;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  /* Fluid Typography System */
+  /* Fluid Typography - Large Hero for Two-Line Wrap */
+  .fluid-h1 {
+    @apply text-4xl sm:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-display font-bold tracking-tight text-foreground;
+  }
+
+  .fluid-h2 {
+    @apply text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-display font-bold tracking-tight text-foreground;
+  }
+
+  .fluid-h3 {
+    @apply text-sm sm:text-base lg:text-xl font-display font-semibold tracking-tight text-foreground;
+  }
+
+  .fluid-h4 {
+    @apply text-sm sm:text-sm lg:text-base font-display font-semibold tracking-tight text-foreground;
+  }
+
+  .fluid-lead {
+    @apply text-lg sm:text-xl lg:text-xl text-muted-foreground leading-relaxed;
+  }
+
+  .fluid-body {
+    @apply text-base sm:text-base lg:text-lg text-muted-foreground leading-relaxed;
+  }
+
+  .text-hero-body {
+    @apply text-xl sm:text-2xl lg:text-2xl leading-relaxed font-medium;
+  }
+
+  /* Hero section text utilities - Deep black text on hero overlays */
+  .on-hero {
+    color: #ffffff !important;
+  }
+
+  /* Text shadow for hero legibility */
+  .text-shadow-hero {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Subtle Ken Burns effect for hero images */
+  @keyframes kenburns {
+    0% { transform: scale(1) translateZ(0); }
+    100% { transform: scale(1.06) translateZ(0); }
+  }
+  .hero-image img,
+  img.hero-image { /* fallback if class applied directly to img */
+    will-change: transform;
+    animation: kenburns 20s ease-in-out infinite alternate;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-image img,
+    img.hero-image {
+      animation: none;
+    }
+  }
+
+  /* Performance Utility */
+  .content-visibility-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 1000px;
+  }
+
+  /* Visual Enhancement */
+  .hairline {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in 0.6s ease-out forwards;
+    animation-delay: calc(var(--stagger, 0) * 100ms);
+  }
+
+  /* Text utility for line clamping */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Enhanced backdrop blur with mobile fallback and performance optimization */
+  .glass-card {
+    @apply bg-card/50 border border-border/40;
+    backdrop-filter: blur(8px);
+  }
+  
+  /* Reduced blur on mobile for better performance */
+  @media (max-width: 640px) {
+    .glass-card {
+      backdrop-filter: blur(4px);
+    }
+  }
+  
+  /* Further reduced blur on low-end devices to prevent freezing */
+  @media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    .glass-card {
+      backdrop-filter: blur(2px);
+    }
+  }
+  
+  /* Performance-optimized sections with content-visibility */
+  .section-optimize {
+    content-visibility: auto;
+    contain-intrinsic-size: 400px;
+  }
+
+  /* Text balancing for better headline wrapping */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Enhanced hover effects */
+  .hover-scale {
+    @apply transition-transform duration-300 hover:scale-105;
+  }
+
+  /* Floating layout utilities */
+  .floating-section {
+    @apply relative overflow-hidden bg-gradient-subtle;
+  }
+  .floating-card {
+    @apply glass-card shadow-card transition-transform duration-300 hover:-translate-y-1 hover:shadow-elevation;
+  }
+
+  /* Forex-themed patterns */
+  .forex-grid-pattern {
+    background-image: 
+      linear-gradient(rgba(120,119,198,0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,119,198,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .trading-chart-pattern {
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(120,119,198,0.1) 2px, transparent 2px),
+      radial-gradient(circle at 75% 75%, rgba(120,119,198,0.1) 2px, transparent 2px);
+    background-size: 100px 100px;
+  }
+
+  /* Performance optimizations */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  /* Loading states */
+  .loading-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* Image utilities */
+  .hero-image {
+    @apply relative overflow-hidden rounded-xl;
+  }
+
+  .hero-image::before {
+    content: '';
+    @apply absolute inset-0 z-10;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+  }
+
+  .hero-image-muted {
+    @apply relative overflow-hidden rounded-xl;
+  }
+
+  .hero-image-muted::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-br from-background/95 to-background/75 z-10;
+  }
+
+  .hero-image-muted img {
+    filter: blur(2px) brightness(0.7);
+  }
+
+  .section-photo-bg {
+    @apply relative;
+  }
+
+  .section-photo-bg::before {
+    content: '';
+    @apply absolute inset-0 z-0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: brightness(0.15) blur(1px);
+  }
+
+  .section-photo-overlay {
+    @apply relative z-10;
+  }
+
+  .card-image {
+    @apply relative overflow-hidden rounded-lg;
+  }
+
+  .card-image::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-t from-background/60 to-transparent z-10 opacity-0 transition-opacity duration-300;
+  }
+
+  .card-image:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Premium Hero Styling */
+  .hero-image {
+    @apply transition-transform duration-700 ease-out;
+    content-visibility: auto;
+    contain-intrinsic-size: 1920px 1080px;
+    transform: scale(1.05);
+  }
+
+  .hero-image:hover {
+    transform: scale(1.1);
+  }
+
+  /* Background Orbs */
+  .hero-orb {
+    @apply absolute rounded-full opacity-20 blur-3xl;
+    background: radial-gradient(circle, hsl(var(--primary) / 0.3), transparent 70%);
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .hero-orb-1 {
+    @apply w-96 h-96;
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+  }
+
+  .hero-orb-2 {
+    @apply w-64 h-64;
+    top: 60%;
+    right: 15%;
+    animation-delay: 2s;
+  }
+
+  .hero-orb-3 {
+    @apply w-80 h-80;
+    bottom: 10%;
+    left: 50%;
+    animation-delay: 4s;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-20px) scale(1.1); }
+  }
+
+  /* Grain Texture */
+  .grain-texture {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  /* Service card image utilities */
+  .service-card-image {
+    @apply relative aspect-[4/3] overflow-hidden;
+  }
+
+  .service-image-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10 pointer-events-none;
+  }
+
+  .service-image-scrim {
+    @apply absolute inset-0 bg-black/60 z-20 opacity-0 transition-opacity duration-300 pointer-events-none;
+  }
+
+  .service-title-chip {
+    @apply bg-black/40 backdrop-blur-sm rounded-lg px-3 py-2 border border-white/20;
+  }
+
+  /* Clickable card enhancements */
+  .card-link {
+    @apply transition-all duration-300 hover:scale-[1.02] focus:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-primary/20;
+  }
+
+  /* Performance optimization classes */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Premium Hero Animations */
+  .hero-badge-enter {
+    animation: fadeInUp 0.6s ease-out 0.2s both;
+  }
+
+  .hero-headline-enter {
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+  }
+
+  .hero-subheader-enter {
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+  }
+
+  .hero-ctas-enter {
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+  }
+
+  .hero-trust-enter {
+    animation: fadeInUp 0.8s ease-out 1.0s both;
+  }
+
+  .hero-disclaimer-enter {
+    animation: fadeInUp 0.8s ease-out 1.2s both;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* MDXEditor Content Theme Adaptation */
+  .mdx-editor-container [role="textbox"],
+  .mdx-editor-container [contenteditable="true"],
+  .mdx-editor-container .prose {
+    @apply text-foreground;
+  }
+
+  /* Light mode - darker text */
+  .mdx-editor-container {
+    @apply bg-background;
+  }
+
+  .mdx-editor-container [contenteditable="true"] {
+    @apply text-foreground;
+    color-scheme: light;
+  }
+
+  /* Dark mode - lighter text */
+  .dark .mdx-editor-container [contenteditable="true"] {
+    @apply text-foreground;
+    color-scheme: dark;
+  }
+
+  /* Ensure paragraphs have proper text color in both modes */
+  .mdx-editor-container p {
+    @apply text-foreground;
+  }
+
+  .dark .mdx-editor-container p {
+    @apply text-foreground;
+  }
+
+  /* Headings in editor */
+  .mdx-editor-container h1,
+  .mdx-editor-container h2,
+  .mdx-editor-container h3,
+  .mdx-editor-container h4,
+  .mdx-editor-container h5,
+  .mdx-editor-container h6 {
+    @apply text-foreground;
+  }
+
+  /* Lists in editor */
+  .mdx-editor-container ul,
+  .mdx-editor-container ol,
+  .mdx-editor-container li {
+    @apply text-foreground;
+  }
+
+  /* Code in editor - improved styling */
+  .mdx-editor-container code {
+    @apply text-foreground bg-muted/60 px-1.5 py-0.5 rounded font-mono text-sm;
+  }
+
+  /* Code blocks in editor - better contrast */
+  .mdx-editor-container pre {
+    @apply bg-muted/80 rounded-lg p-4 overflow-x-auto;
+  }
+
+  .mdx-editor-container pre code {
+    @apply bg-transparent p-0;
+  }
+
+  /* Blockquotes in editor */
+  .mdx-editor-container blockquote {
+    @apply text-foreground border-l-4 border-primary/50 pl-4 italic;
+  }
+
+  /* Placeholder text styling */
+  .mdx-editor-container [contenteditable="true"]::placeholder,
+  .mdx-editor-container [contenteditable="true"]:empty::before {
+    @apply text-muted-foreground;
+  }
+
+  /* Additional MDXEditor overrides for better text visibility */
+  .mdx-editor-container .mdxeditor-rich-text-editor,
+  .mdx-editor-container .mdxeditor-content {
+    @apply text-foreground;
+  }
+
+  /* Links in editor */
+  .mdx-editor-container a {
+    @apply text-primary hover:underline;
+  }
+
+  /* Ensure editor wrapper respects theme */
+  .mdx-editor-container .mdxeditor {
+    @apply bg-background text-foreground;
+  }
+
+  /* Override MDXEditor default text colors */
+  .mdx-editor-container,
+  .mdx-editor-container * {
+    color-scheme: auto;
+  }
+
+  .dark .mdx-editor-container,
+  .dark .mdx-editor-container * {
+    color-scheme: dark;
+  }
+
+  /* CodeMirror editor styling - fix code block colors */
+  .mdx-editor-container .cm-editor {
+    @apply bg-muted/50 text-foreground rounded-lg;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .dark .mdx-editor-container .cm-editor {
+    @apply bg-muted/30 text-foreground;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .mdx-editor-container .cm-content {
+    @apply text-foreground;
+  }
+
+  .mdx-editor-container .cm-line {
+    @apply text-foreground;
+  }
+
+  /* CodeMirror syntax highlighting - subtle for both modes */
+  .mdx-editor-container .cm-editor .cm-string {
+    color: hsl(var(--secondary));
+  }
+
+  .mdx-editor-container .cm-editor .cm-keyword {
+    color: hsl(var(--primary));
+  }
+
+  .mdx-editor-container .cm-editor .cm-comment {
+    @apply text-muted-foreground;
+  }
+
+  .mdx-editor-container .cm-editor .cm-number {
+    color: hsl(var(--accent));
+  }
+
+  /* Table styling in editor */
+  .mdx-editor-container table {
+    @apply text-foreground;
+  }
+
+  .mdx-editor-container table td,
+  .mdx-editor-container table th {
+    @apply text-foreground border-border;
+  }
+
+  /* Image styling in editor - cleaner design */
+  .mdx-editor-container img {
+    @apply rounded-lg max-w-full h-auto my-4 mx-auto block;
+  }
+
+  /* Image wrapper in MDXEditor - cleaner appearance */
+  .mdx-editor-container [class*="imageWrapper"],
+  .mdx-editor-container [data-editor-block-type="image"],
+  .mdx-editor-container span:has(> img) {
+    @apply relative block my-6 mx-auto;
+    max-width: 100%;
+  }
+
+  /* Hide resize handles by default, show on hover */
+  .mdx-editor-container [class*="imageResizer"],
+  .mdx-editor-container [class*="resizeHandle"] {
+    @apply opacity-0 transition-opacity duration-200;
+  }
+
+  .mdx-editor-container [class*="imageWrapper"]:hover [class*="imageResizer"],
+  .mdx-editor-container [class*="imageWrapper"]:hover [class*="resizeHandle"],
+  .mdx-editor-container span:has(> img):hover [class*="resizeHandle"] {
+    @apply opacity-100;
+  }
+
+  /* Cleaner resize handle styling */
+  .mdx-editor-container [class*="resizeHandle"] {
+    @apply w-3 h-3 rounded-full bg-primary border-2 border-background shadow-md;
+  }
+
+  /* Image action buttons (delete, settings) - show on hover */
+  .mdx-editor-container [class*="imageToolbar"],
+  .mdx-editor-container [class*="imageActions"],
+  .mdx-editor-container [class*="imageWrapper"] > div:has(button) {
+    @apply absolute top-2 right-2 opacity-0 transition-opacity duration-200 z-10;
+    @apply flex gap-1 bg-background/90 backdrop-blur-sm rounded-md p-1 shadow-lg border border-border;
+  }
+
+  .mdx-editor-container [class*="imageWrapper"]:hover [class*="imageToolbar"],
+  .mdx-editor-container [class*="imageWrapper"]:hover [class*="imageActions"],
+  .mdx-editor-container [class*="imageWrapper"]:hover > div:has(button),
+  .mdx-editor-container span:has(> img):hover > div:has(button) {
+    @apply opacity-100;
+  }
+
+  /* Image action button styling */
+  .mdx-editor-container [class*="imageToolbar"] button,
+  .mdx-editor-container [class*="imageActions"] button {
+    @apply h-8 w-8 rounded-md bg-muted hover:bg-muted-foreground/20 flex items-center justify-center;
+  }
+
+  .mdx-editor-container [class*="imageToolbar"] button svg,
+  .mdx-editor-container [class*="imageActions"] button svg {
+    @apply h-4 w-4 text-foreground;
+  }
+
+  /* Selected image state */
+  .mdx-editor-container [class*="imageWrapper"][class*="selected"],
+  .mdx-editor-container img:focus,
+  .mdx-editor-container img[class*="selected"] {
+    @apply ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+
+  /* Image caption styling */
+  .mdx-editor-container figcaption {
+    @apply text-sm text-muted-foreground text-center mt-2 italic;
+  }
+
+  /* Image editing hover overlay - Click to edit indicator */
+  .mdx-editor-container figure {
+    @apply relative cursor-pointer;
+  }
+
+  .mdx-editor-container figure::after {
+    content: '✏️ Click to edit • Wrapping • Links • Styling';
+    @apply absolute bottom-2 left-1/2 bg-primary text-primary-foreground px-4 py-2 rounded-lg text-xs font-medium opacity-0 transition-all duration-200 pointer-events-none shadow-xl z-20 whitespace-nowrap;
+    transform: translateX(-50%) translateY(4px);
+    backdrop-filter: blur(4px);
+  }
+
+  .mdx-editor-container figure:hover::after {
+    @apply opacity-100;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Hide default MDXEditor image settings button - we use our own */
+  .mdx-editor-container [class*="imageToolbar"] button[title*="settings" i],
+  .mdx-editor-container [class*="imageToolbar"] button[title*="Settings" i],
+  .mdx-editor-container [class*="imageActions"] button:not([title*="delete" i]):not([title*="Delete" i]) {
+    @apply hidden;
+  }
+
+  /* MDXEditor toolbar styling - ensure visibility */
+  .mdx-editor-container [class*="toolbar"],
+  .mdx-editor-container .mdxeditor-toolbar {
+    @apply bg-muted/50 border-b border-border;
+  }
+
+  /* Force all toolbar buttons and icons to be visible */
+  .mdx-editor-container [class*="toolbar"] button,
+  .mdx-editor-container [class*="toolbar"] [role="button"],
+  .mdx-editor-container .mdxeditor-toolbar button {
+    @apply text-foreground opacity-100;
+  }
+
+  .mdx-editor-container [class*="toolbar"] svg,
+  .mdx-editor-container .mdxeditor-toolbar svg {
+    @apply text-foreground opacity-100;
+    color: hsl(var(--foreground)) !important;
+    stroke: currentColor !important;
+  }
+
+  /* Toolbar select dropdowns */
+  .mdx-editor-container [class*="toolbar"] select,
+  .mdx-editor-container [class*="toolbar"] [role="combobox"],
+  .mdx-editor-container .mdxeditor-toolbar select {
+    @apply text-foreground bg-background border-border;
+  }
+
+  /* Toolbar button hover states */
+  .mdx-editor-container [class*="toolbar"] button:hover,
+  .mdx-editor-container .mdxeditor-toolbar button:hover {
+    @apply bg-muted;
+  }
+
+  /* Active/pressed toolbar buttons */
+  .mdx-editor-container [class*="toolbar"] button[data-state="on"],
+  .mdx-editor-container [class*="toolbar"] button[aria-pressed="true"],
+  .mdx-editor-container .mdxeditor-toolbar button[data-state="on"] {
+    @apply bg-primary/20 text-primary;
+  }
+
+  /* Separator styling */
+  .mdx-editor-container [class*="toolbar"] [class*="separator"],
+  .mdx-editor-container .mdxeditor-toolbar [role="separator"] {
+    @apply bg-border;
+  }
+
+  /* Dark mode specific overrides */
+  .dark .mdx-editor-container [class*="toolbar"] button,
+  .dark .mdx-editor-container [class*="toolbar"] svg,
+  .dark .mdx-editor-container .mdxeditor-toolbar button,
+  .dark .mdx-editor-container .mdxeditor-toolbar svg {
+    color: hsl(var(--foreground)) !important;
+    @apply opacity-100;
+  }
+}
+
+/* ========================================
+   Image Wrapping & Float Styles
+   ======================================== */
+
+/* Float left images with text wrap */
+.image-float-left,
+figure.image-float-left,
+figure[class*="float-left"],
+figure[style*="float: left"] {
+  float: left;
+  margin: 0 1.5rem 1rem 0;
+  max-width: 50%;
+  clear: left;
+}
+
+/* Float right images with text wrap */
+.image-float-right,
+figure.image-float-right,
+figure[class*="float-right"],
+figure[style*="float: right"] {
+  float: right;
+  margin: 0 0 1rem 1.5rem;
+  max-width: 50%;
+  clear: right;
+}
+
+/* Centered images */
+.image-center,
+figure.image-center {
+  display: block;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+/* Full width images */
+.image-full-width,
+figure.image-full-width {
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.image-full-width img {
+  width: 100%;
+  height: auto;
+}
+
+/* Inline images */
+.image-inline,
+figure.image-inline {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 0.5rem;
+}
+
+/* Clearfix for floated images */
+.prose::after,
+article::after,
+.blog-content::after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/* Image link styling */
+.image-link {
+  display: block;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.image-link:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-elevation);
+}
+
+.image-link:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Linked image indicator */
+.image-link::after {
+  content: '';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: hsl(var(--background) / 0.9);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.image-link:hover::after {
+  opacity: 1;
+}
+
+/* Responsive: collapse floats on mobile */
+@media (max-width: 640px) {
+  .image-float-left,
+  .image-float-right,
+  figure.image-float-left,
+  figure.image-float-right,
+  figure[style*="float: left"],
+  figure[style*="float: right"],
+  figure[class*="float-left"],
+  figure[class*="float-right"] {
+    float: none !important;
+    max-width: 100% !important;
+    margin: 1rem auto !important;
+    display: block;
+  }
+  
+  .image-inline,
+  figure.image-inline {
+    display: block;
+    margin: 1rem auto;
+  }
+}
+
+/* Figure within prose - ensure proper spacing */
+.prose figure {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.prose figure img {
+  border-radius: var(--radius);
+}
+
+.prose figure figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+  text-align: center;
+  font-style: italic;
+}
+
+/* Enhanced image hover effects for linked images */
+.image-link img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.image-link:hover img {
+  filter: brightness(1.05);
+}

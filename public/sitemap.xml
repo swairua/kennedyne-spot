@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  
+  <!-- Home Page - Highest Priority -->
+  <url>
+    <loc>https://kennedynespot.com/</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <mobile:mobile/>
+  </url>
+
+  <!-- Core Service Pages - High Priority -->
+  <url>
+    <loc>https://kennedynespot.com/strategy</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+    <mobile:mobile/>
+  </url>
+
+  <url>
+    <loc>https://kennedynespot.com/services</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <mobile:mobile/>
+  </url>
+
+  <url>
+    <loc>https://kennedynespot.com/services/learn</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <mobile:mobile/>
+  </url>
+
+  <url>
+    <loc>https://kennedynespot.com/mentorship</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <mobile:mobile/>
+  </url>
+
+  <!-- Blog & Content - Medium Priority -->
+  <url>
+    <loc>https://kennedynespot.com/blog</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.85</priority>
+    <mobile:mobile/>
+  </url>
+
+  <!-- Educational Resources -->
+  <url>
+    <loc>https://kennedynespot.com/resources</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+  </url>
+
+  <url>
+    <loc>https://kennedynespot.com/signals-tools</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <mobile:mobile/>
+  </url>
+
+  <!-- Supporting Pages -->
+  <url>
+    <loc>https://kennedynespot.com/faqs</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+
+  <url>
+    <loc>https://kennedynespot.com/contact</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <mobile:mobile/>
+  </url>
+
+  <url>
+    <loc>https://kennedynespot.com/about</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>quarterly</changefreq>
+    <priority>0.65</priority>
+    <mobile:mobile/>
+  </url>
+
+  <!-- Landing Pages -->
+  <url>
+    <loc>https://kennedynespot.com/lp/drive-education</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <mobile:mobile/>
+  </url>
+
+  <url>
+    <loc>https://kennedynespot.com/placement-quiz</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.65</priority>
+    <mobile:mobile/>
+  </url>
+
+  <!-- Legal Pages - Lower Priority -->
+  <url>
+    <loc>https://kennedynespot.com/privacy-policy</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <mobile:mobile/>
+  </url>
+
+  <url>
+    <loc>https://kennedynespot.com/terms-of-use</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <mobile:mobile/>
+  </url>
+
+  <url>
+    <loc>https://kennedynespot.com/risk-disclaimer</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <mobile:mobile/>
+  </url>
+
+  <url>
+    <loc>https://kennedynespot.com/affiliate-disclosure</loc>
+    <lastmod>2025-01-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <mobile:mobile/>
+  </url>
+</urlset>
