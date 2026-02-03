@@ -227,7 +227,7 @@ This comprehensive handover report documents all digital assets, configurations,
 ## 📞 Handover Contact & Support
 
 ### **Technical Contacts**
-- **Platform**: Lovable Support Team
+- **Development**: Development team or contractor support
 - **Analytics**: Google Analytics/Tag Manager support
 - **Compliance**: Legal team for privacy policies
 
