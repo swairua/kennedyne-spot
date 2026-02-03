@@ -11,7 +11,6 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react(),
-    mode === 'development' && componentTagger(),
     mode === 'production' && blogOgPlugin(),
   ].filter(Boolean),
   resolve: {
