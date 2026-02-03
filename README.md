@@ -1,22 +1,12 @@
-# Welcome to your Lovable project
-
-## Project info
-
-**URL**: https://lovable.dev/projects/700a6272-d5e8-4140-8788-ee4f669b6f5c
+# KenneDyne Spot - Forex Education & Trading Platform
 
 ## How can I edit this code?
 
 There are several ways of editing your application.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/700a6272-d5e8-4140-8788-ee4f669b6f5c) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
 **Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+If you want to work locally using your own IDE, you can clone this repo and push changes.
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -62,15 +52,24 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/700a6272-d5e8-4140-8788-ee4f669b6f5c) and click on Share -> Publish.
+This project can be deployed to any hosting platform that supports Node.js and npm:
 
-## Can I connect a custom domain to my Lovable project?
+- **Netlify**: Connect your GitHub repository and deploy with automatic builds
+- **Vercel**: Similar to Netlify, optimized for React/Vite projects
+- **Traditional hosting**: Build the project locally and upload to your host
 
-Yes, you can!
+Basic deployment steps:
+```sh
+npm run build
+# Upload the dist/ folder to your hosting provider
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Custom Domain Setup
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+To connect a custom domain:
+1. Set up DNS records with your domain registrar pointing to your hosting provider
+2. Configure your hosting provider to use the custom domain
+3. Update the canonical URL and site metadata in `index.html`
 
 ## Performance Optimizations
 

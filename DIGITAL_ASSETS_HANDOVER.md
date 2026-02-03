@@ -15,7 +15,7 @@ This comprehensive handover report documents all digital assets, configurations,
 - **Styling**: Tailwind CSS with custom design system
 - **Routing**: React Router v6
 - **Backend**: Supabase (PostgreSQL, Auth, Storage)
-- **Hosting**: Lovable Platform
+- **Hosting**: Self-hosted or cloud deployment (Netlify, Vercel, AWS)
 - **Domain**: kennedynespot.com
 
 ### **Performance Metrics**
@@ -227,7 +227,7 @@ This comprehensive handover report documents all digital assets, configurations,
 ## 📞 Handover Contact & Support
 
 ### **Technical Contacts**
-- **Platform**: Lovable Support Team
+- **Development**: Development team or contractor support
 - **Analytics**: Google Analytics/Tag Manager support
 - **Compliance**: Legal team for privacy policies
 
